@@ -1,7 +1,7 @@
 # Личный проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Павел Комаров](https://up.htmlacademy.ru/ecmascript/10/user/1069099).
-* Наставник: `Неизвестно`.
+* Наставник: [Andrey Karyakin](https://htmlacademy.ru/profile/id133011).
 
 ---
 
