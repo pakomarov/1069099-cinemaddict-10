@@ -5,6 +5,7 @@ const FILM_EXTRA_COUNT = 2;
 
 const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
+const siteFooterElement = document.querySelector(`.footer`);
 
 const createProfileTemplate = () => {
   return `<section class="header__profile profile">
@@ -289,9 +290,9 @@ const renderMain = () => {
 
   const filmsListExtraContainerElements = contentContainerElement.querySelectorAll(`.films-list--extra .films-list__container`);
   filmsListExtraContainerElements.forEach(
-      (filmsListExtraContainerElement) => {
+      (element) => {
         for (let i = 0; i < FILM_EXTRA_COUNT; i++) {
-          render(filmsListExtraContainerElement, createFilmTemplate(), `beforeend`);
+          render(element, createFilmTemplate(), `beforeend`);
         }
       }
   );
@@ -300,7 +301,6 @@ const renderMain = () => {
 };
 
 const renderDetailsPopup = () => {
-  const siteFooterElement = document.querySelector(`.footer`);
   render(siteFooterElement, createDetailsTemplate(), `afterend`);
 };
 
