@@ -1,3 +1,5 @@
+import {createTemplateElement, render} from './utils.js';
+import {FILM_COUNT, FILM_EXTRA_COUNT} from './const.js';
 import {createProfileTemplate} from './components/profile.js';
 import {createSiteMenuTemplate} from './components/site-menu.js';
 import {createSortTemplate} from './components/sort.js';
@@ -8,22 +10,9 @@ import {createFilmListExtraTemplate} from './components/film-list-extra.js';
 import {createFilmTemplate} from './components/film.js';
 import {createDetailsTemplate} from './components/details.js';
 
-const FILM_COUNT = 5;
-const FILM_EXTRA_COUNT = 2;
-
 const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
 const siteFooterElement = document.querySelector(`.footer`);
-
-const createTemplateElement = (template) => {
-  const templateElement = document.createElement(`template`);
-  templateElement.innerHTML = template;
-  return templateElement;
-};
-
-const render = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
-};
 
 const renderHeader = () => {
   render(siteHeaderElement, createProfileTemplate(), `beforeend`);

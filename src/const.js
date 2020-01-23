@@ -1,0 +1,4 @@
+const FILM_COUNT = 5;
+const FILM_EXTRA_COUNT = 2;
+
+export {FILM_COUNT, FILM_EXTRA_COUNT};
