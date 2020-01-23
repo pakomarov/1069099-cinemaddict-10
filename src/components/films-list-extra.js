@@ -1,4 +1,4 @@
-export const createFilmsListExtraTemplate = () => {
+const createFilmsListExtraTemplate = () => {
   return `<section class="films-list--extra">
     <h2 class="films-list__title">Top rated</h2>
 
@@ -6,3 +6,5 @@ export const createFilmsListExtraTemplate = () => {
     </div>
   </section>`;
 };
+
+export {createFilmsListExtraTemplate};
