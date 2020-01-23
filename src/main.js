@@ -3,12 +3,12 @@ import {FILM_COUNT, FILM_EXTRA_COUNT} from './const.js';
 import {createProfileTemplate} from './components/profile.js';
 import {createSiteMenuTemplate} from './components/site-menu.js';
 import {createSortTemplate} from './components/sort.js';
-import {createContentContainerTemplate} from './components/content-container.js';
-import {createFilmListTemplate} from './components/film-list.js';
+import {createFilmsListsContainerTemplate} from './components/films-lists-container.js';
+import {createFilmsListTemplate} from './components/films-list.js';
 import {createShowMoreButtonTemplate} from './components/show-more-button.js';
-import {createFilmListExtraTemplate} from './components/film-list-extra.js';
+import {createFilmsListExtraTemplate} from './components/films-list-extra.js';
 import {createFilmTemplate} from './components/film.js';
-import {createDetailsTemplate} from './components/details.js';
+import {createFilmDetailsTemplate} from './components/film-details.js';
 
 const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
@@ -27,22 +27,22 @@ const renderMain = () => {
   const sortTemplateElement = createTemplateElement(createSortTemplate());
   fragment.appendChild(sortTemplateElement.content);
 
-  const contentContainerTemplateElement = createTemplateElement(createContentContainerTemplate());
-  fragment.appendChild(contentContainerTemplateElement.content);
+  const filmsListsContainerTemplateElement = createTemplateElement(createFilmsListsContainerTemplate());
+  fragment.appendChild(filmsListsContainerTemplateElement.content);
 
-  const contentContainerElement = fragment.querySelector(`.films`);
-  render(contentContainerElement, createFilmListTemplate(), `beforeend`);
-  render(contentContainerElement, createFilmListExtraTemplate(), `beforeend`);
-  render(contentContainerElement, createFilmListExtraTemplate(), `beforeend`);
+  const filmsListsContainerElement = fragment.querySelector(`.films`);
+  render(filmsListsContainerElement, createFilmsListTemplate(), `beforeend`);
+  render(filmsListsContainerElement, createFilmsListExtraTemplate(), `beforeend`);
+  render(filmsListsContainerElement, createFilmsListExtraTemplate(), `beforeend`);
 
-  const filmsListElement = contentContainerElement.querySelector(`.films-list`);
+  const filmsListElement = filmsListsContainerElement.querySelector(`.films-list`);
   const filmsListContainerElement = filmsListElement.querySelector(`.films-list__container`);
   for (let i = 0; i < FILM_COUNT; i++) {
     render(filmsListContainerElement, createFilmTemplate(), `beforeend`);
   }
   render(filmsListElement, createShowMoreButtonTemplate(), `beforeend`);
 
-  const filmsListExtraContainerElements = contentContainerElement.querySelectorAll(`.films-list--extra .films-list__container`);
+  const filmsListExtraContainerElements = filmsListsContainerElement.querySelectorAll(`.films-list--extra .films-list__container`);
   filmsListExtraContainerElements.forEach(
       (element) => {
         for (let i = 0; i < FILM_EXTRA_COUNT; i++) {
@@ -55,7 +55,7 @@ const renderMain = () => {
 };
 
 const renderDetailsPopup = () => {
-  render(siteFooterElement, createDetailsTemplate(), `afterend`);
+  render(siteFooterElement, createFilmDetailsTemplate(), `afterend`);
 };
 
 const renderSiteComponents = () => {
