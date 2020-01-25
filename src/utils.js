@@ -15,9 +15,30 @@ const getRandomArrayEntry = (array) => array[getRandomBetween(0, (array.length -
 
 const getRandomPastDate = () => new Date(getRandomBetween(0, Date.now()));
 
+const getShuffledArray = (array) => {
+  const shuffledArray = array.slice();
+
+  // Алгоритм: "The Durstenfeld Shuffle" (оптимизированная версия "Fisher–Yates shuffle")
+  // Алгоритм работает с конца до начала для простоты расчёта индекса j. 0 < j < i если работать начиная с конца, или i < j < (array.length - 1) если работать с начала
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = getRandomBetween(0, i);
+    [shuffledArray[j], shuffledArray[i]] = [shuffledArray[i], shuffledArray[j]];
+  }
+
+  return shuffledArray;
+};
+
+const getRandomSubsetOfArray = (array) => getShuffledArray(array)
+  .slice(0, getRandomBetween(0, array.length));
+
+const flipCoin = () => Math.random() > 0.5;
+
 export {
   createTemplateElement,
   render,
+  getRandomBetween,
   getRandomArrayEntry,
-  getRandomPastDate
+  getRandomPastDate,
+  getRandomSubsetOfArray,
+  flipCoin
 };
