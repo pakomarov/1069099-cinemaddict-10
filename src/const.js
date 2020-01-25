@@ -1,4 +1,8 @@
-const FILM_COUNT = 5;
-const FILM_EXTRA_COUNT = 2;
+const EMOTIONS = [
+  `smile`,
+  `sleeping`,
+  `puke`,
+  `angry`
+];
 
-export {FILM_COUNT, FILM_EXTRA_COUNT};
+export {EMOTIONS};
