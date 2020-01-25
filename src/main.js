@@ -6,15 +6,18 @@ import {createFilmsListsContainerTemplate} from './components/films-lists-contai
 import {createFilmsListTemplate} from './components/films-list.js';
 import {createShowMoreButtonTemplate} from './components/show-more-button.js';
 import {createFilmsListExtraTemplate} from './components/films-list-extra.js';
-import {createFilmTemplate} from './components/film.js';
+import {createFilmMarkup} from './components/film.js';
 import {createFilmDetailsTemplate} from './components/film-details.js';
+import {generateFilms} from './mocks/film.js';
 
 const FILM_COUNT = 5;
-const FILM_EXTRA_COUNT = 2;
+// const FILM_EXTRA_COUNT = 2;
 
 const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
 const siteFooterElement = document.querySelector(`.footer`);
+
+const films = generateFilms(FILM_COUNT);
 
 const renderHeader = () => {
   render(siteHeaderElement, createProfileTemplate(), `beforeend`);
@@ -39,19 +42,18 @@ const renderMain = () => {
 
   const filmsListElement = filmsListsContainerElement.querySelector(`.films-list`);
   const filmsListContainerElement = filmsListElement.querySelector(`.films-list__container`);
-  for (let i = 0; i < FILM_COUNT; i++) {
-    render(filmsListContainerElement, createFilmTemplate(), `beforeend`);
-  }
+  films.forEach((film) => render(filmsListContainerElement, createFilmMarkup(film), `beforeend`));
+
   render(filmsListElement, createShowMoreButtonTemplate(), `beforeend`);
 
-  const filmsListExtraContainerElements = filmsListsContainerElement.querySelectorAll(`.films-list--extra .films-list__container`);
-  filmsListExtraContainerElements.forEach(
-      (element) => {
-        for (let i = 0; i < FILM_EXTRA_COUNT; i++) {
-          render(element, createFilmTemplate(), `beforeend`);
-        }
-      }
-  );
+  // const filmsListExtraContainerElements = filmsListsContainerElement.querySelectorAll(`.films-list--extra .films-list__container`);
+  // filmsListExtraContainerElements.forEach(
+  //     (element) => {
+  //       for (let i = 0; i < FILM_EXTRA_COUNT; i++) {
+  //         render(element, createFilmTemplate(), `beforeend`);
+  //       }
+  //     }
+  // );
 
   siteMainElement.appendChild(fragment);
 };
@@ -63,7 +65,7 @@ const renderDetailsPopup = () => {
 const renderSiteComponents = () => {
   renderHeader();
   renderMain();
-  renderDetailsPopup();
+  // renderDetailsPopup();
 };
 
 renderSiteComponents();

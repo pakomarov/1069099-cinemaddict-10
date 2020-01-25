@@ -95,6 +95,7 @@ const MOCKUP_SENTENCES = [
   `Nunc fermentum tortor ac porta dapibus.`,
   `In rutrum ac purus sit amet tempus.`
 ];
+const COMMENTS_COUNT_MAX = 100;
 
 const generateTitle = () => getRandomArrayEntry(TITLES);
 
@@ -130,9 +131,10 @@ const generateWatchingDate = (alreadyWatched) => alreadyWatched ? getRandomPastD
 const generateFavorite = () => flipCoin();
 
 const generateFilm = () => {
+  const comments = generateComments(getRandomBetween(0, COMMENTS_COUNT_MAX))
   const alreadyWatched = generateAlreadyWatched();
   return {
-    comments: generateComments(),
+    comments,
     filmInfo: {
       title: generateTitle(),
       alternativeTitle: generateTitle(),
