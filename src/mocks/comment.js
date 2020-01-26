@@ -39,9 +39,11 @@ const generateComment = () => {
 };
 
 const generateComments = (count) => {
-  return new Array(count)
-    .fill(``)
-    .map(generateComment);
+  const comments = [];
+  for (let i = 0; i < count; i++) {
+    comments.push(generateComment());
+  }
+  return comments;
 };
 
 export {generateComments};

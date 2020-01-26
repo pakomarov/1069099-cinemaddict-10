@@ -131,7 +131,7 @@ const generateWatchingDate = (alreadyWatched) => alreadyWatched ? getRandomPastD
 const generateFavorite = () => flipCoin();
 
 const generateFilm = () => {
-  const comments = generateComments(getRandomBetween(0, COMMENTS_COUNT_MAX))
+  const comments = generateComments(getRandomBetween(0, COMMENTS_COUNT_MAX));
   const alreadyWatched = generateAlreadyWatched();
   return {
     comments,
@@ -163,9 +163,11 @@ const generateFilm = () => {
 };
 
 const generateFilms = (count) => {
-  return new Array(count)
-    .fill(``)
-    .map(generateFilm);
+  const films = [];
+  for (let i = 0; i < count; i++) {
+    films.push(generateFilm());
+  }
+  return films;
 };
 
 export {generateFilms};
