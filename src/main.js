@@ -1,5 +1,5 @@
 import {createTemplateElement, render} from './utils.js';
-import {createProfileTemplate} from './components/profile.js';
+import {createProfileMarkup} from './components/profile.js';
 import {createSiteMenuTemplate} from './components/site-menu.js';
 import {createSortTemplate} from './components/sort.js';
 import {createFilmsListsContainerTemplate} from './components/films-lists-container.js';
@@ -9,8 +9,9 @@ import {createFilmsListExtraTemplate} from './components/films-list-extra.js';
 import {createFilmMarkup} from './components/film.js';
 import {createFilmDetailsTemplate} from './components/film-details.js';
 import {generateFilms} from './mocks/film.js';
+import {getProfileRank} from './mocks/profile.js';
 
-const FILM_COUNT = 5;
+const FILM_COUNT = 15;
 // const FILM_EXTRA_COUNT = 2;
 
 const siteHeaderElement = document.querySelector(`.header`);
@@ -18,9 +19,10 @@ const siteMainElement = document.querySelector(`.main`);
 const siteFooterElement = document.querySelector(`.footer`);
 
 const films = generateFilms(FILM_COUNT);
+const profileRank = getProfileRank(films);
 
 const renderHeader = () => {
-  render(siteHeaderElement, createProfileTemplate(), `beforeend`);
+  render(siteHeaderElement, createProfileMarkup(profileRank), `beforeend`);
 };
 
 const renderMain = () => {

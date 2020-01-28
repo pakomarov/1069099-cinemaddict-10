@@ -7,9 +7,9 @@ const EMOTIONS = [
 
 const ProfileRank = [
   {borderCount: 0, rank: ``},
-  {borderCount: 10, rank: `novice`},
-  {borderCount: 20, rank: `fan`},
-  {borderCount: Infinity, rank: `movie buff`},
+  {borderCount: 10, rank: `Novice`},
+  {borderCount: 20, rank: `Fan`},
+  {borderCount: Infinity, rank: `Movie Buff`},
 ];
 
 export {EMOTIONS, ProfileRank};
