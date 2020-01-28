@@ -3,9 +3,7 @@ import {ProfileRank} from '../const.js';
 const countWacthedFilms = (films) => {
   let watchedCounter = 0;
   for (const film of films) {
-    if (film.userDetails.alreadyWatched) {
-      watchedCounter++;
-    }
+    watchedCounter += film.userDetails.alreadyWatched ? 1 : 0;
   }
   return watchedCounter;
 };
