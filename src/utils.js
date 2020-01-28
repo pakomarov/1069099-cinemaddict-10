@@ -33,6 +33,10 @@ const getRandomSubsetOfArray = (array) => getShuffledArray(array)
 
 const flipCoin = () => Math.random() > 0.5;
 
+const joinMapped = (data, createMarkup, delimiter = ``) => data
+  .map(createMarkup)
+  .join(delimiter);
+
 export {
   createTemplateElement,
   render,
@@ -40,5 +44,6 @@ export {
   getRandomArrayEntry,
   getRandomPastDate,
   getRandomSubsetOfArray,
-  flipCoin
+  flipCoin,
+  joinMapped
 };

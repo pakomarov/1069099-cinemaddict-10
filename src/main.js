@@ -1,6 +1,6 @@
 import {createTemplateElement, render} from './utils.js';
 import {createProfileMarkup} from './components/profile.js';
-import {createSiteMenuTemplate} from './components/site-menu.js';
+import {createSiteMenuMarkup} from './components/site-menu.js';
 import {createSortTemplate} from './components/sort.js';
 import {createFilmsListsContainerTemplate} from './components/films-lists-container.js';
 import {createFilmsListTemplate} from './components/films-list.js';
@@ -10,6 +10,7 @@ import {createFilmMarkup} from './components/film.js';
 import {createFilmDetailsTemplate} from './components/film-details.js';
 import {generateFilms} from './mocks/film.js';
 import {getProfileRank} from './mocks/profile.js';
+import {getFilters} from './mocks/site-menu.js';
 
 const FILM_COUNT = 15;
 // const FILM_EXTRA_COUNT = 2;
@@ -20,6 +21,7 @@ const siteFooterElement = document.querySelector(`.footer`);
 
 const films = generateFilms(FILM_COUNT);
 const profileRank = getProfileRank(films);
+const filters = getFilters(films);
 
 const renderHeader = () => {
   render(siteHeaderElement, createProfileMarkup(profileRank), `beforeend`);
@@ -28,7 +30,7 @@ const renderHeader = () => {
 const renderMain = () => {
   const fragment = document.createDocumentFragment();
 
-  const siteMenuTemplateElement = createTemplateElement(createSiteMenuTemplate());
+  const siteMenuTemplateElement = createTemplateElement(createSiteMenuMarkup(filters));
   fragment.appendChild(siteMenuTemplateElement.content);
 
   const sortTemplateElement = createTemplateElement(createSortTemplate());

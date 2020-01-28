@@ -1,6 +1,5 @@
 const FILTER_TITLES = [
-  `All movies`,
-  `Wacthlist`,
+  `Watchlist`,
   `History`,
   `Favorites`
 ];
@@ -9,9 +8,6 @@ const getFilterCount = (films, filterTitle) => {
   let count = 0;
 
   switch (filterTitle) {
-    case `All movies`:
-      count = films.length;
-      break;
     case `Watchlist`:
       for (const film of films) {
         count += film.userDetails.watchlist ? 1 : 0;
