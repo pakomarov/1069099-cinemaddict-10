@@ -37,6 +37,37 @@ const joinMapped = (data, createMarkup, delimiter = ``) => data
   .map(createMarkup)
   .join(delimiter);
 
+const formatRuntime = (totalMinutes) => {
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+
+  return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
+};
+
+const getMonthName = (date) => new Intl.DateTimeFormat(`en-US`, {month: `long`}).format(date);
+
+const formatReleaseDate = (date) => {
+  const day = date.getDate();
+  const month = getMonthName(date);
+  const year = date.getFullYear();
+
+  return `${day} ${month} ${year}`;
+};
+
+const castMonthFormat = (value) => String(value).padStart(2, `0`);
+const castDayFormat = (value) => String(value).padStart(2, `0`);
+const castTimeFormat = (value) => String(value).padStart(2, `0`);
+
+const formatCommentDate = (date) => {
+  const year = date.getFullYear();
+  const month = castMonthFormat(date.getMonth() + 1);
+  const day = castDayFormat(date.getDate());
+  const hours = castTimeFormat(date.getHours());
+  const minutes = castTimeFormat(date.getMinutes());
+
+  return `${year}/${month}/${day} ${hours}:${minutes}`;
+};
+
 export {
   createTemplateElement,
   render,
@@ -45,5 +76,8 @@ export {
   getRandomPastDate,
   getRandomSubsetOfArray,
   flipCoin,
-  joinMapped
+  joinMapped,
+  formatRuntime,
+  formatReleaseDate,
+  formatCommentDate
 };

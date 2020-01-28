@@ -12,4 +12,6 @@ const ProfileRank = [
   {borderCount: Infinity, rank: `Movie Buff`},
 ];
 
-export {EMOTIONS, ProfileRank};
+const ATTRIBUTE_CHECKED = `checked`;
+
+export {EMOTIONS, ProfileRank, ATTRIBUTE_CHECKED};

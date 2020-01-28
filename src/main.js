@@ -7,7 +7,7 @@ import {createFilmsListTemplate} from './components/films-list.js';
 import {createShowMoreButtonTemplate} from './components/show-more-button.js';
 import {createFilmsListExtraTemplate} from './components/films-list-extra.js';
 import {createFilmMarkup} from './components/film.js';
-import {createFilmDetailsTemplate} from './components/film-details.js';
+import {createFilmDetailsMarkup} from './components/film-details.js';
 import {generateFilms} from './mocks/film.js';
 import {getProfileRank} from './mocks/profile.js';
 import {getFilters} from './mocks/site-menu.js';
@@ -63,13 +63,13 @@ const renderMain = () => {
 };
 
 const renderDetailsPopup = () => {
-  render(siteFooterElement, createFilmDetailsTemplate(), `afterend`);
+  render(siteFooterElement, createFilmDetailsMarkup(films[0]), `afterend`);
 };
 
 const renderSiteComponents = () => {
   renderHeader();
   renderMain();
-  // renderDetailsPopup();
+  renderDetailsPopup();
 };
 
 renderSiteComponents();

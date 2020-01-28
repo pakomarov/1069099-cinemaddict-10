@@ -1,12 +1,7 @@
+import {formatRuntime} from '../utils.js';
+
 const DESCRIPTION_MAX_LENGTH = 140;
 const CLASS_CONTROL_ACTIVE = `film-card__controls-item--active`;
-
-const formatRuntime = (totalMinutes) => {
-  const hours = Math.floor(totalMinutes / 60);
-  const minutes = totalMinutes % 60;
-
-  return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
-};
 
 const formatDescription = (description) => description.length > DESCRIPTION_MAX_LENGTH ? `${description.substring(0, DESCRIPTION_MAX_LENGTH)}...` : description;
 
@@ -44,9 +39,9 @@ const createFilmMarkup = ({
     description
   },
   userDetails: {
-    watchlist,
-    alreadyWatched,
-    favorite
+    watchlist: isInWacthlist,
+    alreadyWatched: wasAlreadyWatched,
+    favorite: isFavorite
   }
 }) => {
   const TemplateSettings = {title, totalRating, poster};
@@ -56,9 +51,9 @@ const createFilmMarkup = ({
   TemplateSettings.genreText = genre.join(`, `);
   TemplateSettings.descriptionFormated = formatDescription(description);
   TemplateSettings.commentCount = comments.length;
-  TemplateSettings.watchlistClass = watchlist ? CLASS_CONTROL_ACTIVE : ``;
-  TemplateSettings.alreadyWatchedClass = alreadyWatched ? CLASS_CONTROL_ACTIVE : ``;
-  TemplateSettings.favoriteClass = favorite ? CLASS_CONTROL_ACTIVE : ``;
+  TemplateSettings.watchlistClass = isInWacthlist ? CLASS_CONTROL_ACTIVE : ``;
+  TemplateSettings.alreadyWatchedClass = wasAlreadyWatched ? CLASS_CONTROL_ACTIVE : ``;
+  TemplateSettings.favoriteClass = isFavorite ? CLASS_CONTROL_ACTIVE : ``;
 
   return setupFilmTemplate(TemplateSettings);
 };
