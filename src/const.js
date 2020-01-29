@@ -70,6 +70,11 @@ const NewCommentSettings = {
   ATTRIBUTE_NON_CHECKED: ``
 };
 
+const ShowSettings = {
+  FILM_COUNT_ON_START: 5,
+  FILM_COUNT_BY_BUTTON: 5
+};
+
 export {
   PROFILE_RANKS,
   SiteMenuSettings,
@@ -78,5 +83,6 @@ export {
   SelectionSettings,
   ControlsSettings,
   RatingScoreSettings,
-  NewCommentSettings
+  NewCommentSettings,
+  ShowSettings
 };
