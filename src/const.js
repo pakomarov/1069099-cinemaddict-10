@@ -42,8 +42,24 @@ const SelectionSettings = {
   COUNT: 2
 };
 
-const FilmDetailsSettings = {
-  INDEX_OF_OPENED_BY_DEFAULT: 0,
+const ControlsSettings = {
+  CONTROLS: [
+    {title: `watchlist`, text: `Add to watchlist`},
+    {title: `watched`, text: `Already watched`},
+    {title: `favorite`, text: `Add to favorite`}
+  ],
+  ATTRIBUTE_CHECKED: `checked`,
+  ATTRIBUTE_NON_CHECKED: ``
+};
+
+const RatingScoreSettings = {
+  SCORE_MIN: 1,
+  SCORE_MAX: 9,
+  ATTRIBUTE_CHECKED: `checked`,
+  ATTRIBUTE_NON_CHECKED: ``
+};
+
+const NewCommentSettings = {
   EMOTIONS: [
     `smile`,
     `sleeping`,
@@ -60,5 +76,7 @@ export {
   SortSettings,
   FilmSettings,
   SelectionSettings,
-  FilmDetailsSettings
+  ControlsSettings,
+  RatingScoreSettings,
+  NewCommentSettings
 };

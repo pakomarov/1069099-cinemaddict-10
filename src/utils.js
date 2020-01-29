@@ -52,6 +52,14 @@ const formatReleaseDate = (date) => {
   return `${day} ${month} ${year}`;
 };
 
+const createRange = (min, max) => {
+  const range = [];
+  for (let i = min; i <= max; i++) {
+    range.push(i);
+  }
+  return range;
+};
+
 const castMonthFormat = (value) => String(value).padStart(2, `0`);
 const castDayFormat = (value) => String(value).padStart(2, `0`);
 const castTimeFormat = (value) => String(value).padStart(2, `0`);
@@ -77,5 +85,6 @@ export {
   formatRuntime,
   formatCatalogSize,
   formatReleaseDate,
+  createRange,
   formatCommentDate
 };

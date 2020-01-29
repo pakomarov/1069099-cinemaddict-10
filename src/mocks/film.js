@@ -1,3 +1,4 @@
+import {generateComments} from './comment.js';
 import {
   getRandomBetween,
   getRandomArrayEntry,
@@ -5,7 +6,7 @@ import {
   getRandomPastDate,
   flipCoin
 } from '../utils.js';
-import {generateComments} from './comment.js';
+import {RatingScoreSettings} from '../const.js';
 
 const TITLES = [
   `Побег из Шоушенка`,
@@ -99,7 +100,7 @@ const COMMENTS_COUNT_MAX = 100;
 
 const generateTitle = () => getRandomArrayEntry(TITLES);
 
-const generateRating = () => Math.round(Math.random() * 100) / 10;
+const generateTotalRating = () => Math.round(Math.random() * 100) / 10;
 
 const generatePoster = () => getRandomArrayEntry(POSTERS);
 
@@ -122,6 +123,8 @@ const generateGenre = () => getRandomSubsetOfArray(GENRES);
 const generateDescription = () => getRandomSubsetOfArray(MOCKUP_SENTENCES)
   .join(` `);
 
+const generatePersonalRating = () => getRandomBetween(RatingScoreSettings.SCORE_MIN, RatingScoreSettings.SCORE_MAX);
+
 const generateWatchlist = () => flipCoin();
 
 const generateAlreadyWatched = () => flipCoin();
@@ -138,7 +141,7 @@ const generateFilm = () => {
     filmInfo: {
       title: generateTitle(),
       alternativeTitle: generateTitle(),
-      totalRating: generateRating(),
+      totalRating: generateTotalRating(),
       poster: generatePoster(),
       ageRating: generateAgeRating(),
       director: generateDirector(),
@@ -153,7 +156,7 @@ const generateFilm = () => {
       description: generateDescription()
     },
     userDetails: {
-      personalRating: generateRating(),
+      personalRating: generatePersonalRating(),
       watchlist: generateWatchlist(),
       alreadyWatched,
       watchingDate: generateWatchingDate(alreadyWatched),

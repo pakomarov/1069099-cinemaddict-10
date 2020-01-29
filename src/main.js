@@ -12,6 +12,7 @@ import {createBriefStatsMarkup} from './components/brief-stats.js';
 import {createFilmDetailsMarkup} from './components/film-details.js';
 
 const FILM_COUNT = 15;
+const OPENED_FILM_INDEX = 0;
 
 const siteHeaderElement = document.querySelector(`.header`);
 const siteMainElement = document.querySelector(`.main`);
@@ -49,7 +50,7 @@ const renderBriefStats = (container) => {
 };
 
 const renderFilmDetails = (container) => {
-  const filmDetailsMarkup = createFilmDetailsMarkup(catalog[SiteSettings.indexOfOpenedFilm]);
+  const filmDetailsMarkup = createFilmDetailsMarkup(catalog[OPENED_FILM_INDEX]);
   render(container, filmDetailsMarkup, `afterend`);
 };
 
