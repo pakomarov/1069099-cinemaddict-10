@@ -162,12 +162,4 @@ const generateFilm = () => {
   };
 };
 
-const generateFilms = (count) => {
-  const films = [];
-  for (let i = 0; i < count; i++) {
-    films.push(generateFilm());
-  }
-  return films;
-};
-
-export {generateFilms};
+export {generateFilm};

@@ -1,25 +1,24 @@
-const FILTER_TITLES = [
-  `Watchlist`,
-  `History`,
-  `Favorites`
-];
+import {SiteMenuSettings} from '../const.js';
 
-const getFilterCount = (films, filterTitle) => {
+const getFilterCount = (filterTitle, catalog) => {
   let count = 0;
 
   switch (filterTitle) {
+    case `All movies`:
+      count = null;
+      break;
     case `Watchlist`:
-      for (const film of films) {
+      for (const film of catalog) {
         count += film.userDetails.watchlist ? 1 : 0;
       }
       break;
     case `History`:
-      for (const film of films) {
+      for (const film of catalog) {
         count += film.userDetails.alreadyWatched ? 1 : 0;
       }
       break;
     case `Favorites`:
-      for (const film of films) {
+      for (const film of catalog) {
         count += film.userDetails.favorite ? 1 : 0;
       }
       break;
@@ -28,11 +27,12 @@ const getFilterCount = (films, filterTitle) => {
   return count;
 };
 
-const getFilters = (films) => {
-  return FILTER_TITLES.map((filterTitle) => {
+const getFilters = (catalog, {siteMenuActiveFilter: activeFilter}) => {
+  return SiteMenuSettings.FILTER_TITLES.map((filterTitle) => {
     return {
       title: filterTitle,
-      count: getFilterCount(films, filterTitle)
+      isActive: filterTitle === activeFilter,
+      count: getFilterCount(filterTitle, catalog)
     };
   });
 };

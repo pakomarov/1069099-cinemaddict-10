@@ -1,17 +1,17 @@
-import {ProfileRank} from '../const.js';
+import {PROFILE_RANKS} from '../const.js';
 
-const countWacthedFilms = (films) => {
+const countWacthedFilms = (catalog) => {
   let watchedCounter = 0;
-  for (const film of films) {
+  for (const film of catalog) {
     watchedCounter += film.userDetails.alreadyWatched ? 1 : 0;
   }
   return watchedCounter;
 };
 
-const convertWacthedCountToRank = (watchedCount) => ProfileRank.find((rank) => watchedCount <= rank.borderCount).rank;
+const convertWacthedCountToRank = (watchedCount) => PROFILE_RANKS.find((rank) => watchedCount <= rank.borderCount).rank;
 
-const getProfileRank = (films) => {
-  const watchedCount = countWacthedFilms(films);
+const getProfileRank = (catalog) => {
+  const watchedCount = countWacthedFilms(catalog);
   return convertWacthedCountToRank(watchedCount);
 };
 

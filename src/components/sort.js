@@ -1,9 +1,15 @@
-const createSortTemplate = () => {
+import {joinMapped} from '../utils.js';
+import {createSortButtonMarkup} from './sort-button.js';
+
+const setupSortTemplate = (sortButtonsMarkup) => {
   return `<ul class="sort">
-    <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
-    <li><a href="#" class="sort__button">Sort by date</a></li>
-    <li><a href="#" class="sort__button">Sort by rating</a></li>
+    ${sortButtonsMarkup}
   </ul>`;
 };
 
-export {createSortTemplate};
+const createSortMarkup = (sortButtons) => {
+  const sortButtonsMarkup = joinMapped(sortButtons, createSortButtonMarkup, `\n`);
+  return setupSortTemplate(sortButtonsMarkup);
+};
+
+export {createSortMarkup};

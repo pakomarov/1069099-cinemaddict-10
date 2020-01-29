@@ -1,9 +1,7 @@
 import {formatRuntime} from '../utils.js';
+import {FilmSettings} from '../const.js';
 
-const DESCRIPTION_MAX_LENGTH = 140;
-const CLASS_CONTROL_ACTIVE = `film-card__controls-item--active`;
-
-const formatDescription = (description) => description.length > DESCRIPTION_MAX_LENGTH ? `${description.substring(0, DESCRIPTION_MAX_LENGTH)}...` : description;
+const formatDescription = (description) => description.length > FilmSettings.DESCRIPTION_MAX_LENGTH ? `${description.substring(0, FilmSettings.DESCRIPTION_MAX_LENGTH)}...` : description;
 
 const setupFilmTemplate = (Settings) => {
   return `<article class="film-card">
@@ -51,9 +49,9 @@ const createFilmMarkup = ({
   TemplateSettings.genreText = genre.join(`, `);
   TemplateSettings.descriptionFormated = formatDescription(description);
   TemplateSettings.commentCount = comments.length;
-  TemplateSettings.watchlistClass = isInWacthlist ? CLASS_CONTROL_ACTIVE : ``;
-  TemplateSettings.alreadyWatchedClass = wasAlreadyWatched ? CLASS_CONTROL_ACTIVE : ``;
-  TemplateSettings.favoriteClass = isFavorite ? CLASS_CONTROL_ACTIVE : ``;
+  TemplateSettings.watchlistClass = isInWacthlist ? FilmSettings.CLASS_CONTROL_ACTIVE : FilmSettings.CLASS_CONTROL_NON_ACTIVE;
+  TemplateSettings.alreadyWatchedClass = wasAlreadyWatched ? FilmSettings.CLASS_CONTROL_ACTIVE : FilmSettings.CLASS_CONTROL_NON_ACTIVE;
+  TemplateSettings.favoriteClass = isFavorite ? FilmSettings.CLASS_CONTROL_ACTIVE : FilmSettings.CLASS_CONTROL_NON_ACTIVE;
 
   return setupFilmTemplate(TemplateSettings);
 };

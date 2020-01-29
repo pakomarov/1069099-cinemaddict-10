@@ -2,7 +2,7 @@ import {
   getRandomArrayEntry,
   getRandomPastDate
 } from '../utils.js';
-import {EMOTIONS} from '../const.js';
+import {FilmDetailsSettings} from '../const.js';
 
 const NAMES = [
   `Иван Иванович Иванов`,
@@ -27,7 +27,7 @@ const generateCommentMessage = () => getRandomArrayEntry(COMMENT_MESSAGES);
 
 const generateDate = () => getRandomPastDate();
 
-const generateEmotion = () => getRandomArrayEntry(EMOTIONS);
+const generateEmotion = () => getRandomArrayEntry(FilmDetailsSettings.EMOTIONS);
 
 const generateComment = () => {
   return {

@@ -1,9 +1,3 @@
-const createTemplateElement = (template) => {
-  const templateElement = document.createElement(`template`);
-  templateElement.innerHTML = template;
-  return templateElement;
-};
-
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
 };
@@ -44,6 +38,10 @@ const formatRuntime = (totalMinutes) => {
   return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
 };
 
+const numberWithDelimeters = (number, delimeter) => number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, delimeter);
+
+const formatCatalogSize = (catalogSize) => numberWithDelimeters(catalogSize, ` `);
+
 const getMonthName = (date) => new Intl.DateTimeFormat(`en-US`, {month: `long`}).format(date);
 
 const formatReleaseDate = (date) => {
@@ -69,7 +67,6 @@ const formatCommentDate = (date) => {
 };
 
 export {
-  createTemplateElement,
   render,
   getRandomBetween,
   getRandomArrayEntry,
@@ -78,6 +75,7 @@ export {
   flipCoin,
   joinMapped,
   formatRuntime,
+  formatCatalogSize,
   formatReleaseDate,
   formatCommentDate
 };

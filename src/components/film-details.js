@@ -1,5 +1,5 @@
 import {joinMapped, formatReleaseDate, formatRuntime, formatCommentDate} from '../utils.js';
-import {ATTRIBUTE_CHECKED, EMOTIONS} from '../const.js';
+import {FilmDetailsSettings} from '../const.js';
 
 const setupGenreTemplate = (genre) => {
   return `<span class="film-details__genre">${genre}</span>`;
@@ -137,9 +137,9 @@ const createControlsMarkup = ({
     favorite: isFavorite
   }
 }) => {
-  const watchlistCheckedAttribute = isInWatchlist ? ATTRIBUTE_CHECKED : ``;
-  const alreadyWatchedCheckedAttribute = wasAlreadyWatched ? ATTRIBUTE_CHECKED : ``;
-  const favoriteCheckedAttribute = isFavorite ? ATTRIBUTE_CHECKED : ``;
+  const watchlistCheckedAttribute = isInWatchlist ? FilmDetailsSettings.ATTRIBUTE_CHECKED : FilmDetailsSettings.ATTRIBUTE_NON_CHECKED;
+  const alreadyWatchedCheckedAttribute = wasAlreadyWatched ? FilmDetailsSettings.ATTRIBUTE_CHECKED : FilmDetailsSettings.ATTRIBUTE_NON_CHECKED;
+  const favoriteCheckedAttribute = isFavorite ? FilmDetailsSettings.ATTRIBUTE_CHECKED : FilmDetailsSettings.ATTRIBUTE_NON_CHECKED;
 
   return setupControlsTemplate(watchlistCheckedAttribute, alreadyWatchedCheckedAttribute, favoriteCheckedAttribute);
 };
@@ -186,7 +186,7 @@ const setupEmojiTemplate = (emotion) => {
   </label>`;
 };
 
-const createEmojiListMarkup = () => joinMapped(EMOTIONS, setupEmojiTemplate, `\n`);
+const createEmojiListMarkup = () => joinMapped(FilmDetailsSettings.EMOTIONS, setupEmojiTemplate, `\n`);
 
 const setupNewCommentFormTemplate = (emojiListMarkup) => {
   return `<div class="film-details__new-comment">
