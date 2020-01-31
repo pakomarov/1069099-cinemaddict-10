@@ -49,9 +49,9 @@ const createFilmMarkup = ({
   TemplateSettings.genreText = genre.join(`, `);
   TemplateSettings.descriptionFormated = formatDescription(description);
   TemplateSettings.commentCount = comments.length;
-  TemplateSettings.watchlistClass = isInWacthlist ? FilmSettings.CLASS_CONTROL_ACTIVE : FilmSettings.CLASS_CONTROL_NON_ACTIVE;
-  TemplateSettings.alreadyWatchedClass = wasAlreadyWatched ? FilmSettings.CLASS_CONTROL_ACTIVE : FilmSettings.CLASS_CONTROL_NON_ACTIVE;
-  TemplateSettings.favoriteClass = isFavorite ? FilmSettings.CLASS_CONTROL_ACTIVE : FilmSettings.CLASS_CONTROL_NON_ACTIVE;
+  TemplateSettings.watchlistClass = isInWacthlist ? FilmSettings.CLASS_CONTROL_ACTIVE : ``;
+  TemplateSettings.alreadyWatchedClass = wasAlreadyWatched ? FilmSettings.CLASS_CONTROL_ACTIVE : ``;
+  TemplateSettings.favoriteClass = isFavorite ? FilmSettings.CLASS_CONTROL_ACTIVE : ``;
 
   return setupFilmTemplate(TemplateSettings);
 };

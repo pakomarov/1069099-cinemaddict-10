@@ -1,4 +1,3 @@
-import {joinMapped} from '../utils.js';
 import {createFilterMarkup} from './filter.js';
 
 const setupSiteMenuTemplate = (filtersMarkup) => {
@@ -9,7 +8,11 @@ const setupSiteMenuTemplate = (filtersMarkup) => {
 };
 
 const createSiteMenuMarkup = (filters) => {
-  const filtersMarkup = joinMapped(filters, createFilterMarkup, `\n`);
+  const filtersMarkup = filters.map((filter, i) => {
+    const isActive = i === 0;
+    return createFilterMarkup(filter, isActive);
+  })
+  .join(`\n`);
   return setupSiteMenuTemplate(filtersMarkup);
 };
 

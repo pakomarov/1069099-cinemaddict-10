@@ -1,4 +1,3 @@
-import {getControls} from '../mocks/controls.js';
 import {joinMapped} from '../utils';
 
 const setupControlTemplate = (title, text, checkedAttribute) => {
@@ -16,10 +15,9 @@ const setupControlSectionTemplate = (controlsMarkup) => {
   </section>`;
 };
 
-const createControlSectionMarkup = (film) => {
-  const controls = getControls(film);
+const createControlsMarkup = (controls) => {
   const controlsMarkup = joinMapped(controls, createCotrolMarkup, `\n`);
   return setupControlSectionTemplate(controlsMarkup);
 };
 
-export {createControlSectionMarkup};
+export {createControlsMarkup};

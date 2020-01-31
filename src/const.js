@@ -1,8 +1,8 @@
 const PROFILE_RANKS = [
-  {borderCount: 0, rank: ``},
-  {borderCount: 10, rank: `Novice`},
-  {borderCount: 20, rank: `Fan`},
-  {borderCount: Infinity, rank: `Movie Buff`},
+  {borderCount: 0, title: ``},
+  {borderCount: 10, title: `Novice`},
+  {borderCount: 20, title: `Fan`},
+  {borderCount: Infinity, title: `Movie Buff`},
 ];
 
 const SiteMenuSettings = {
@@ -12,9 +12,7 @@ const SiteMenuSettings = {
     `History`,
     `Favorites`
   ],
-  ACTIVE_BY_DEFAULT: `All movies`,
-  CLASS_ACTIVE: `main-navigation__item--active`,
-  CLASS_NON_ACTIVE: ``
+  CLASS_ACTIVE: `main-navigation__item--active`
 };
 
 const SortSettings = {
@@ -23,15 +21,12 @@ const SortSettings = {
     `date`,
     `rating`
   ],
-  ACTIVE_BY_DEFAULT: `default`,
-  CLASS_ACTIVE: `sort__button--active`,
-  CLASS_NON_ACTIVE: ``
+  CLASS_ACTIVE: `sort__button--active`
 };
 
 const FilmSettings = {
   DESCRIPTION_MAX_LENGTH: 140,
-  CLASS_CONTROL_ACTIVE: `film-card__controls-item--active`,
-  CLASS_CONTROL_NON_ACTIVE: ``
+  CLASS_CONTROL_ACTIVE: `film-card__controls-item--active`
 };
 
 const SelectionSettings = {
@@ -42,33 +37,23 @@ const SelectionSettings = {
   COUNT: 2
 };
 
-const ControlsSettings = {
-  CONTROLS: [
-    {title: `watchlist`, text: `Add to watchlist`},
-    {title: `watched`, text: `Already watched`},
-    {title: `favorite`, text: `Add to favorite`}
-  ],
-  ATTRIBUTE_CHECKED: `checked`,
-  ATTRIBUTE_NON_CHECKED: ``
-};
+const CONTROLS = [
+  {title: `watchlist`, text: `Add to watchlist`},
+  {title: `watched`, text: `Already watched`},
+  {title: `favorite`, text: `Add to favorite`}
+];
 
 const RatingScoreSettings = {
   SCORE_MIN: 1,
-  SCORE_MAX: 9,
-  ATTRIBUTE_CHECKED: `checked`,
-  ATTRIBUTE_NON_CHECKED: ``
+  SCORE_MAX: 9
 };
 
-const NewCommentSettings = {
-  EMOTIONS: [
-    `smile`,
-    `sleeping`,
-    `puke`,
-    `angry`
-  ],
-  ATTRIBUTE_CHECKED: `checked`,
-  ATTRIBUTE_NON_CHECKED: ``
-};
+const EMOTIONS = [
+  `smile`,
+  `sleeping`,
+  `puke`,
+  `angry`
+];
 
 const ShowSettings = {
   FILM_COUNT_ON_START: 5,
@@ -81,8 +66,8 @@ export {
   SortSettings,
   FilmSettings,
   SelectionSettings,
-  ControlsSettings,
+  CONTROLS,
   RatingScoreSettings,
-  NewCommentSettings,
+  EMOTIONS,
   ShowSettings
 };

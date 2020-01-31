@@ -27,11 +27,10 @@ const getFilterCount = (filterTitle, catalog) => {
   return count;
 };
 
-const getFilters = (catalog, {siteMenuActiveFilter: activeFilter}) => {
+const getFilters = (catalog) => {
   return SiteMenuSettings.FILTER_TITLES.map((filterTitle) => {
     return {
       title: filterTitle,
-      isActive: filterTitle === activeFilter,
       count: getFilterCount(filterTitle, catalog)
     };
   });

@@ -1,18 +1,16 @@
 import {PROFILE_RANKS} from '../const.js';
 
 const countWacthedFilms = (catalog) => {
-  let watchedCounter = 0;
-  for (const film of catalog) {
-    watchedCounter += film.userDetails.alreadyWatched ? 1 : 0;
-  }
-  return watchedCounter;
+  return catalog.reduce((watchedCount, film) => {
+    return watchedCount + film.userDetails.alreadyWatched ? 1 : 0;
+  }, 0);
 };
 
-const convertWacthedCountToRank = (watchedCount) => PROFILE_RANKS.find((rank) => watchedCount <= rank.borderCount).rank;
+const convertWacthedCountToTitle = (watchedCount) => PROFILE_RANKS.find((rank) => watchedCount <= rank.borderCount).title;
 
 const getProfileRank = (catalog) => {
   const watchedCount = countWacthedFilms(catalog);
-  return convertWacthedCountToRank(watchedCount);
+  return convertWacthedCountToTitle(watchedCount);
 };
 
 export {getProfileRank};

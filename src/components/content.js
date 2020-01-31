@@ -1,22 +1,10 @@
-import {createCatalogMarkup} from './catalog.js';
-import {getSelections} from '../mocks/selections.js';
-import {joinMapped} from '../utils.js';
-import {createSelectionMarkup} from './selection.js';
-
-const setupContentTemplate = (catalogMarkup, selectionsMarkup) => {
+const createContentMarkup = () => {
   return `<section class="films">
-    ${catalogMarkup}
-    ${selectionsMarkup}
+    <section class="films-list">
+      <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
+      <div class="films-list__container"></div>
+    </section>
   </section>`;
-};
-
-const createContentMarkup = (catalog) => {
-  const catalogMarkup = createCatalogMarkup(catalog);
-
-  const selections = getSelections(catalog);
-  const selectionsMarkup = joinMapped(selections, createSelectionMarkup, `\n`);
-
-  return setupContentTemplate(catalogMarkup, selectionsMarkup);
 };
 
 export {createContentMarkup};

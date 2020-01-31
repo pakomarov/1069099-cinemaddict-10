@@ -1,4 +1,4 @@
-import {ControlsSettings} from '../const.js';
+import {CONTROLS} from '../const.js';
 
 const getCheckedAttribute = (title, {
   userDetails: {
@@ -21,11 +21,11 @@ const getCheckedAttribute = (title, {
       break;
   }
 
-  return isChecked ? ControlsSettings.ATTRIBUTE_CHECKED : ControlsSettings.ATTRIBUTE_NON_CHECKED;
+  return isChecked ? `checked` : ``;
 };
 
 const getControls = (film) => {
-  return ControlsSettings.CONTROLS.map(({title, text}) => {
+  return CONTROLS.map(({title, text}) => {
     return {
       title,
       text,
