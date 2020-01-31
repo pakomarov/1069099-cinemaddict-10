@@ -1,7 +1,22 @@
-export const createSortTemplate = () => {
+import {SortSettings} from '../const.js';
+
+const createSortButtonMarkup = (activeClass, title) => {
+  return `<li><a href="#" class="sort__button ${activeClass}">Sort by ${title}</a></li>`;
+};
+
+const setupSortTemplate = (sortButtonsMarkup) => {
   return `<ul class="sort">
-    <li><a href="#" class="sort__button sort__button--active">Sort by default</a></li>
-    <li><a href="#" class="sort__button">Sort by date</a></li>
-    <li><a href="#" class="sort__button">Sort by rating</a></li>
+    ${sortButtonsMarkup}
   </ul>`;
 };
+
+const createSortMarkup = () => {
+  const sortButtonsMarkup = SortSettings.BUTTONS_TITLES.map((title, i) => {
+    const activeClass = i === 0 ? SortSettings.CLASS_ACTIVE : ``;
+    return createSortButtonMarkup(activeClass, title);
+  })
+  .join(`\n`);
+  return setupSortTemplate(sortButtonsMarkup);
+};
+
+export {createSortMarkup};

@@ -1,19 +1,59 @@
-export const createFilmTemplate = () => {
+import {formatRuntime} from '../utils.js';
+import {FilmSettings} from '../const.js';
+
+const formatDescription = (description) => description.length > FilmSettings.DESCRIPTION_MAX_LENGTH ? `${description.substring(0, FilmSettings.DESCRIPTION_MAX_LENGTH)}...` : description;
+
+const setupFilmTemplate = (Settings) => {
   return `<article class="film-card">
-    <h3 class="film-card__title">The Dance of Life</h3>
-    <p class="film-card__rating">8.3</p>
+    <h3 class="film-card__title">${Settings.title}</h3>
+    <p class="film-card__rating">${Settings.totalRating}</p>
     <p class="film-card__info">
-      <span class="film-card__year">1929</span>
-      <span class="film-card__duration">1h 55m</span>
-      <span class="film-card__genre">Musical</span>
+      <span class="film-card__year">${Settings.releaseYear}</span>
+      <span class="film-card__duration">${Settings.runtimeFormated}</span>
+      <span class="film-card__genre">${Settings.genreText}</span>
     </p>
-    <img src="./images/posters/the-dance-of-life.jpg" alt="" class="film-card__poster">
-    <p class="film-card__description">Burlesque comic Ralph "Skid" Johnson (Skelly), and specialty dancer Bonny Lee King (Carroll), end up together on a cold, rainy night at a tr…</p>
-    <a class="film-card__comments">5 comments</a>
+    <img src="${Settings.poster}" alt="" class="film-card__poster">
+    <p class="film-card__description">${Settings.descriptionFormated}</p>
+    <a class="film-card__comments">${Settings.commentCount} comments</a>
     <form class="film-card__controls">
-      <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist">Add to watchlist</button>
-      <button class="film-card__controls-item button film-card__controls-item--mark-as-watched">Mark as watched</button>
-      <button class="film-card__controls-item button film-card__controls-item--favorite">Mark as favorite</button>
+      <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${Settings.watchlistClass}">Add to watchlist</button>
+      <button class="film-card__controls-item button film-card__controls-item--mark-as-watched ${Settings.alreadyWatchedClass}">Mark as watched</button>
+      <button class="film-card__controls-item button film-card__controls-item--favorite ${Settings.favoriteClass}">Mark as favorite</button>
     </form>
   </article>`;
 };
+
+const createFilmMarkup = ({
+  comments,
+  filmInfo: {
+    title,
+    totalRating,
+    poster,
+    release: {
+      date
+    },
+    runtime,
+    genre,
+    description
+  },
+  userDetails: {
+    watchlist: isInWacthlist,
+    alreadyWatched: wasAlreadyWatched,
+    favorite: isFavorite
+  }
+}) => {
+  const TemplateSettings = {title, totalRating, poster};
+
+  TemplateSettings.releaseYear = (new Date(date)).getFullYear();
+  TemplateSettings.runtimeFormated = formatRuntime(runtime);
+  TemplateSettings.genreText = genre.join(`, `);
+  TemplateSettings.descriptionFormated = formatDescription(description);
+  TemplateSettings.commentCount = comments.length;
+  TemplateSettings.watchlistClass = isInWacthlist ? FilmSettings.CLASS_CONTROL_ACTIVE : ``;
+  TemplateSettings.alreadyWatchedClass = wasAlreadyWatched ? FilmSettings.CLASS_CONTROL_ACTIVE : ``;
+  TemplateSettings.favoriteClass = isFavorite ? FilmSettings.CLASS_CONTROL_ACTIVE : ``;
+
+  return setupFilmTemplate(TemplateSettings);
+};
+
+export {createFilmMarkup};
