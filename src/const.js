@@ -7,7 +7,6 @@ const PROFILE_RANKS = [
 
 const SiteMenuSettings = {
   FILTER_TITLES: [
-    `All movies`,
     `Watchlist`,
     `History`,
     `Favorites`

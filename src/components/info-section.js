@@ -36,62 +36,81 @@ const createGenresMarkup = (genres) => {
 };
 
 const setupInfoSectionTemplate = (Settings, EmbeddedMarkup) => {
+  const {
+    poster,
+    ageRating,
+    title,
+    totalRating,
+    director,
+    writers,
+    actors,
+    releaseDate,
+    runtime,
+    releaseCountry,
+    description
+  } = Settings;
+  const {
+    alternativeTitleMarkup,
+    personalRatingMarkup,
+    genresMarkup
+  } = EmbeddedMarkup;
+
   return `<div class="form-details__top-container">
     <div class="film-details__close">
       <button class="film-details__close-btn" type="button">close</button>
     </div>
     <div class="film-details__info-wrap">
       <div class="film-details__poster">
-        <img class="film-details__poster-img" src="${Settings.poster}" alt="">
+        <img class="film-details__poster-img" src="${poster}" alt="">
 
-        <p class="film-details__age">${Settings.ageRating}+</p>
+        <p class="film-details__age">${ageRating}+</p>
       </div>
 
       <div class="film-details__info">
         <div class="film-details__info-head">
           <div class="film-details__title-wrap">
-            <h3 class="film-details__title">${Settings.title}</h3>
-            ${EmbeddedMarkup.alternativeTitleMarkup}
+            <h3 class="film-details__title">${title}</h3>
+            ${alternativeTitleMarkup}
           </div>
 
           <div class="film-details__rating">
-            <p class="film-details__total-rating">${Settings.totalRating}</p>
-            ${EmbeddedMarkup.personalRatingMarkup}
+            <p class="film-details__total-rating">${totalRating}</p>
+            ${personalRatingMarkup}
           </div>
         </div>
 
           <table class="film-details__table">
           <tr class="film-details__row">
             <td class="film-details__term">Director</td>
-            <td class="film-details__cell">${Settings.director}</td>
+            <td class="film-details__cell">${director}</td>
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Writers</td>
-            <td class="film-details__cell">${Settings.writers}</td>
+            <td class="film-details__cell">${writers}</td>
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Actors</td>
-            <td class="film-details__cell">${Settings.actors}</td>
+            <td class="film-details__cell">${actors}</td>
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Release Date</td>
-            <td class="film-details__cell">${Settings.releaseDate}</td>
+            <td class="film-details__cell">${releaseDate}</td>
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Runtime</td>
-            <td class="film-details__cell">${Settings.runtime}</td>
+            <td class="film-details__cell">${runtime}</td>
           </tr>
           <tr class="film-details__row">
             <td class="film-details__term">Country</td>
-            <td class="film-details__cell">${Settings.releaseCountry}</td>
+            <td class="film-details__cell">${releaseCountry}</td>
           </tr>
           <tr class="film-details__row">
-            ${EmbeddedMarkup.genresMarkup}
+            ${genresMarkup}
           </tr>
         </table>
 
         <p class="film-details__film-description">
-          ${Settings.description}
+          ${description}
         </p>
       </div>
     </div>
@@ -114,7 +133,7 @@ const createInfoSectionMarkup = (film) => {
       actors,
       runtime,
       genre: genres,
-      description
+      description,
     }
   } = film;
 
@@ -124,18 +143,18 @@ const createInfoSectionMarkup = (film) => {
     title,
     totalRating,
     director,
+    writers: writers.join(`, `),
+    actors: actors.join(`, `),
+    releaseDate: formatReleaseDate(new Date(releaseDate)),
+    runtime: formatRuntime(runtime),
     releaseCountry,
     description
   };
-  const EmbeddedMarkup = {};
-
-  EmbeddedMarkup.alternativeTitleMarkup = createAlternativeTitleMarkup(film);
-  EmbeddedMarkup.personalRatingMarkup = createPersonalRatingMarkup(film);
-  TemplateSettings.writers = writers.join(`, `);
-  TemplateSettings.actors = actors.join(`, `);
-  TemplateSettings.releaseDate = formatReleaseDate(new Date(releaseDate));
-  TemplateSettings.runtime = formatRuntime(runtime);
-  EmbeddedMarkup.genresMarkup = createGenresMarkup(genres);
+  const EmbeddedMarkup = {
+    alternativeTitleMarkup: createAlternativeTitleMarkup(film),
+    personalRatingMarkup: createPersonalRatingMarkup(film),
+    genresMarkup: createGenresMarkup(genres)
+  };
 
   return setupInfoSectionTemplate(TemplateSettings, EmbeddedMarkup);
 };
