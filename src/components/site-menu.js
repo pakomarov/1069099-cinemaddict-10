@@ -1,4 +1,18 @@
-import {createFilterMarkup} from './filter.js';
+import {createElement} from '../utils.js';
+import {SiteMenuSettings} from '../const.js';
+
+const setupFilterTemplate = (link, activeClass, title, count) => {
+  return `<a href="${link}" class="main-navigation__item ${activeClass}">
+    ${title}
+    <span class="main-navigation__item-count">${count}</span>
+  </a>`;
+};
+
+const createFilterMarkup = ({title, count}, isActive) => {
+  const link = `#${title.toLowerCase()}`;
+  const activeClass = isActive ? SiteMenuSettings.CLASS_ACTIVE : ``;
+  return setupFilterTemplate(link, activeClass, title, count);
+};
 
 const setupSiteMenuTemplate = (filtersMarkup) => {
   return `<nav class="main-navigation">
@@ -8,7 +22,7 @@ const setupSiteMenuTemplate = (filtersMarkup) => {
   </nav>`;
 };
 
-const createSiteMenuMarkup = (filters) => {
+const createSiteMenuTemplate = (filters) => {
   const filtersMarkup = filters.map((filter, i) => {
     const isActive = i === 0;
     return createFilterMarkup(filter, isActive);
@@ -17,4 +31,25 @@ const createSiteMenuMarkup = (filters) => {
   return setupSiteMenuTemplate(filtersMarkup);
 };
 
-export {createSiteMenuMarkup};
+export default class SiteMenu {
+  constructor(filters) {
+    this._filters = filters;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createSiteMenuTemplate(this.filters);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
