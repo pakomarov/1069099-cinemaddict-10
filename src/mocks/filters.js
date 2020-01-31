@@ -6,17 +6,17 @@ const titleToPropertyName = {
   'Favorites': `favorite`
 };
 
-const getFilterCount = (filterTitle, catalog) => {
-  return catalog.reduce((count, film) => {
+const getFilterCount = (filterTitle, films) => {
+  return films.reduce((count, film) => {
     return count + film.userDetails[titleToPropertyName[filterTitle]] ? 1 : 0;
   }, 0);
 };
 
-const getFilters = (catalog) => {
+const getFilters = (films) => {
   return SiteMenuSettings.FILTER_TITLES.map((filterTitle) => {
     return {
       title: filterTitle,
-      count: getFilterCount(filterTitle, catalog)
+      count: getFilterCount(filterTitle, films)
     };
   });
 };

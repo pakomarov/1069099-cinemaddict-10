@@ -1,23 +1,30 @@
-import {joinMapped} from '../utils.js';
-import {createFilmMarkup} from './film.js';
+import {createElement} from '../utils.js';
 
-const setupSelectionTemplate = (title, filmsMarkup) => {
+const createSelectionTemplate = (title) => {
   return `<section class="films-list--extra">
     <h2 class="films-list__title">${title}</h2>
-
-    <div class="films-list__container">
-      ${filmsMarkup}
-    </div>
   </section>`;
 };
 
-const createSelectionMarkup = ({title, selectedFilms}) => {
-  if (selectedFilms === null) {
-    return ``;
+export default class Selection {
+  constructor(title) {
+    this._title = title;
+    this._element = null;
   }
 
-  const selectedFilmsMarkup = joinMapped(selectedFilms, createFilmMarkup, `\n`);
-  return setupSelectionTemplate(title, selectedFilmsMarkup);
-};
+  getTemplate() {
+    return createSelectionTemplate(this._title);
+  }
 
-export {createSelectionMarkup};
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

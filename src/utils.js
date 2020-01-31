@@ -57,9 +57,7 @@ const formatRuntime = (totalMinutes) => {
   return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
 };
 
-const numberWithDelimeters = (number, delimeter) => number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, delimeter);
-
-const formatCatalogSize = (catalogSize) => numberWithDelimeters(catalogSize, ` `);
+const formatNumberWithDelimeters = (number, delimeter) => number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, delimeter);
 
 const getMonthName = (date) => new Intl.DateTimeFormat(`en-US`, {month: `long`}).format(date);
 
@@ -104,8 +102,8 @@ export {
   flipCoin,
   joinMapped,
   formatRuntime,
-  formatCatalogSize,
   formatReleaseDate,
+  formatNumberWithDelimeters,
   createRange,
   formatCommentDate
 };

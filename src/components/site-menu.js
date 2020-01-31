@@ -38,7 +38,7 @@ export default class SiteMenu {
   }
 
   getTemplate() {
-    return createSiteMenuTemplate(this.filters);
+    return createSiteMenuTemplate(this._filters);
   }
 
   getElement() {
