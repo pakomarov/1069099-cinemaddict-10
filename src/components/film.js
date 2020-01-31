@@ -1,4 +1,4 @@
-import {formatRuntime} from '../utils.js';
+import {createElement, formatRuntime} from '../utils.js';
 import {FilmSettings} from '../const.js';
 
 const formatDescription = (description) => description.length > FilmSettings.DESCRIPTION_MAX_LENGTH ? `${description.substring(0, FilmSettings.DESCRIPTION_MAX_LENGTH)}...` : description;
@@ -37,7 +37,7 @@ const setupFilmTemplate = (Settings) => {
   </article>`;
 };
 
-const createFilmMarkup = (film) => {
+const createFilmTemplate = (film) => {
   const {
     comments,
     filmInfo: {
@@ -75,4 +75,25 @@ const createFilmMarkup = (film) => {
   return setupFilmTemplate(TemplateSettings);
 };
 
-export {createFilmMarkup};
+export default class Film {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
