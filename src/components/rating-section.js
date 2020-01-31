@@ -1,4 +1,4 @@
-import {createRange} from '../utils.js';
+import {createElement, createRange} from '../utils.js';
 import {RatingScoreSettings} from '../const.js';
 
 const setupScorePointsTemplate = (scorePoints, checkedAttribute) => {
@@ -51,10 +51,31 @@ const setupRatingSectionTemplate = (poster, title, ratingScoreMarkup) => {
   </div>`;
 };
 
-const createRatingSectionMarkup = (film) => {
+const createRatingSectionTemplate = (film) => {
   const {filmInfo: {poster, title}} = film;
   const ratingScoreMarkup = createRatingScoreMarkup(film);
   return setupRatingSectionTemplate(poster, title, ratingScoreMarkup);
 };
 
-export {createRatingSectionMarkup};
+export default class RatingSection {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createRatingSectionTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
