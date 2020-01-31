@@ -1,4 +1,5 @@
 import {joinMapped, formatReleaseDate, formatRuntime} from '../utils';
+import {CONTROLS} from '../const.js';
 
 const setupAlternativeTitleTemplate = (alternativeTitle) => {
   return `<p class="film-details__title-original">Original: ${alternativeTitle}</p>`;
@@ -35,6 +36,37 @@ const createGenresMarkup = (genres) => {
   return setupGenresTemplate(descriptionCategoryName, genreListMarkup);
 };
 
+const titleToPropertyName = {
+  'watchlist': `watchlist`,
+  'watched': `alreadyWatched`,
+  'favorite': `favorite`
+};
+
+const getControls = (film) => {
+  return CONTROLS.map((control) => {
+    const {title, text} = control;
+    return {
+      title,
+      text,
+      checkedAttribute: film.userDetails[titleToPropertyName[title]] ? `checked` : ``
+    };
+  });
+};
+
+const setupControlTemplate = (title, text, checkedAttribute) => {
+  return `<input type="checkbox" class="film-details__control-input visually-hidden" id="${title}" name="${title}" ${checkedAttribute}>
+  <label for="${title}" class="film-details__control-label film-details__control-label--${title}">${text}</label>`;
+};
+
+const createCotrolMarkup = ({title, text, checkedAttribute}) => {
+  return setupControlTemplate(title, text, checkedAttribute);
+};
+
+const createControlsMarkup = (film) => {
+  const controls = getControls(film);
+  return joinMapped(controls, createCotrolMarkup, `\n`);
+};
+
 const setupInfoSectionTemplate = (Settings, EmbeddedMarkup) => {
   const {
     poster,
@@ -52,7 +84,8 @@ const setupInfoSectionTemplate = (Settings, EmbeddedMarkup) => {
   const {
     alternativeTitleMarkup,
     personalRatingMarkup,
-    genresMarkup
+    genresMarkup,
+    controlsMarkup
   } = EmbeddedMarkup;
 
   return `<div class="form-details__top-container">
@@ -114,6 +147,10 @@ const setupInfoSectionTemplate = (Settings, EmbeddedMarkup) => {
         </p>
       </div>
     </div>
+
+    <section class="film-details__controls">
+      ${controlsMarkup}
+    </section>
   </div>`;
 };
 
@@ -153,7 +190,8 @@ const createInfoSectionMarkup = (film) => {
   const EmbeddedMarkup = {
     alternativeTitleMarkup: createAlternativeTitleMarkup(film),
     personalRatingMarkup: createPersonalRatingMarkup(film),
-    genresMarkup: createGenresMarkup(genres)
+    genresMarkup: createGenresMarkup(genres),
+    controlsMarkup: createControlsMarkup(film)
   };
 
   return setupInfoSectionTemplate(TemplateSettings, EmbeddedMarkup);
