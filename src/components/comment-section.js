@@ -1,4 +1,4 @@
-import {joinMapped, formatCommentDate} from '../utils.js';
+import {createElement, joinMapped, formatCommentDate} from '../utils.js';
 import {EMOTIONS} from '../const.js';
 
 const setupCommentTemplate = (emotion, commentText, author, commentDate) => {
@@ -74,7 +74,7 @@ const setupCommentSectionTemplate = (commentCount, commentsMarkup, newCommentMar
   </div>`;
 };
 
-const createCommentSectionMarkup = ({comments}) => {
+const createCommentSectionTemplate = ({comments}) => {
   const commentCount = comments.length;
   const commentsMarkup = createCommentsMarkup(comments);
   const newCommentMarkup = createNewCommentMarkup();
@@ -82,4 +82,25 @@ const createCommentSectionMarkup = ({comments}) => {
   return setupCommentSectionTemplate(commentCount, commentsMarkup, newCommentMarkup);
 };
 
-export {createCommentSectionMarkup};
+export default class CommentSection {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createCommentSectionTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
