@@ -1,4 +1,4 @@
-import {joinMapped, formatReleaseDate, formatRuntime} from '../utils';
+import {createElement, joinMapped, formatReleaseDate, formatRuntime} from '../utils';
 import {CONTROLS} from '../const.js';
 
 const setupAlternativeTitleTemplate = (alternativeTitle) => {
@@ -58,13 +58,13 @@ const setupControlTemplate = (title, text, checkedAttribute) => {
   <label for="${title}" class="film-details__control-label film-details__control-label--${title}">${text}</label>`;
 };
 
-const createCotrolMarkup = ({title, text, checkedAttribute}) => {
+const createControlMarkup = ({title, text, checkedAttribute}) => {
   return setupControlTemplate(title, text, checkedAttribute);
 };
 
 const createControlsMarkup = (film) => {
   const controls = getControls(film);
-  return joinMapped(controls, createCotrolMarkup, `\n`);
+  return joinMapped(controls, createControlMarkup, `\n`);
 };
 
 const setupInfoSectionTemplate = (Settings, EmbeddedMarkup) => {
@@ -154,7 +154,7 @@ const setupInfoSectionTemplate = (Settings, EmbeddedMarkup) => {
   </div>`;
 };
 
-const createInfoSectionMarkup = (film) => {
+const createInfoSectionTemplate = (film) => {
   const {
     filmInfo: {
       poster,
@@ -197,4 +197,25 @@ const createInfoSectionMarkup = (film) => {
   return setupInfoSectionTemplate(TemplateSettings, EmbeddedMarkup);
 };
 
-export {createInfoSectionMarkup};
+export default class InfoSection {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createInfoSectionTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
