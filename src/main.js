@@ -47,10 +47,27 @@ const renderFilm = (containerElement, film) => {
   const closeDetailsPopup = () => {
     detailsPopupComponent.getElement().remove();
   };
+  const onEscKeyDown = (evt) => {
+    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
 
-  posterElement.addEventListener(`click`, openDetailsPopup);
-  titleElement.addEventListener(`click`, openDetailsPopup);
-  commentsElement.addEventListener(`click`, openDetailsPopup);
+    if (isEscKey) {
+      closeDetailsPopup();
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    }
+  };
+
+  posterElement.addEventListener(`click`, () => {
+    openDetailsPopup();
+    document.addEventListener(`keydown`, onEscKeyDown);
+  });
+  titleElement.addEventListener(`click`, () => {
+    openDetailsPopup();
+    document.addEventListener(`keydown`, onEscKeyDown);
+  });
+  commentsElement.addEventListener(`click`, () => {
+    openDetailsPopup();
+    document.addEventListener(`keydown`, onEscKeyDown);
+  });
 
   closeButtonElement.addEventListener(`click`, closeDetailsPopup);
 
