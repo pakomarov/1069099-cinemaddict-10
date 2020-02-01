@@ -6,7 +6,7 @@ import {
   getRandomPastDate,
   flipCoin
 } from '../utils.js';
-import {RatingScoreSettings} from '../const.js';
+import {PersonalRating} from '../const.js';
 
 const TITLES = [
   `Побег из Шоушенка`,
@@ -123,7 +123,7 @@ const generateGenre = () => getRandomSubsetOfArray(GENRES);
 const generateDescription = () => getRandomSubsetOfArray(MOCKUP_SENTENCES)
   .join(` `);
 
-const generatePersonalRating = () => getRandomBetween(RatingScoreSettings.SCORE_MIN, RatingScoreSettings.SCORE_MAX);
+const generatePersonalRating = () => getRandomBetween(PersonalRating.SCORE_MIN, PersonalRating.SCORE_MAX);
 
 const generateWatchlist = () => flipCoin();
 
