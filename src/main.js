@@ -7,6 +7,7 @@ import SiteMenuComponent from './components/site-menu.js';
 import SortComponent from './components/sort.js';
 import ContentComponent from './components/content.js';
 import CatalogComponent from './components/catalog.js';
+import EmptyCatalogComponent from './components/empty-catalog.js';
 import FilmListContainerComponent from './components/film-list-container.js';
 import {ShowSettings} from './const.js';
 import ShowMoreButtonComponent from './components/show-more-button';
@@ -17,12 +18,18 @@ import {getCatalogSize} from './mocks/brief-stats.js';
 import BriefStatsComponent from './components/brief-stats.js';
 import DetailsPopupComponent from './components/details-popup.js';
 
-const FILM_COUNT = 17;
+const Selector = {
+  BODY: `body`,
+  HEADER: `.header`,
+  MAIN: `.main`,
+  FOOTER: `.footer`
+};
+const FILM_COUNT = 10;
 
-const bodyElement = document.querySelector(`body`);
-const siteHeaderElement = bodyElement.querySelector(`.header`);
-const siteMainElement = bodyElement.querySelector(`.main`);
-const siteFooterElement = bodyElement.querySelector(`.footer`);
+const bodyElement = document.querySelector(Selector.BODY);
+const siteHeaderElement = bodyElement.querySelector(Selector.HEADER);
+const siteMainElement = bodyElement.querySelector(Selector.MAIN);
+const siteFooterElement = bodyElement.querySelector(Selector.FOOTER);
 
 const films = generateFilms(FILM_COUNT);
 
@@ -41,20 +48,29 @@ const renderFilm = (containerElement, film) => {
   const closeDetailsPopup = () => {
     detailsPopupComponent.getElement().remove();
   };
+  const onEscKeyDown = (evt) => {
+    const isEscKey = evt.key === `Escape` || evt.key === `Esc`;
+
+    if (isEscKey) {
+      closeDetailsPopup();
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    }
+  };
 
   posterElement.addEventListener(`click`, () => {
     openDetailsPopup();
+    document.addEventListener(`keydown`, onEscKeyDown);
   });
   titleElement.addEventListener(`click`, () => {
     openDetailsPopup();
+    document.addEventListener(`keydown`, onEscKeyDown);
   });
   commentsElement.addEventListener(`click`, () => {
     openDetailsPopup();
+    document.addEventListener(`keydown`, onEscKeyDown);
   });
 
-  closeButtonElement.addEventListener(`click`, () => {
-    closeDetailsPopup();
-  });
+  closeButtonElement.addEventListener(`click`, closeDetailsPopup);
 
   render(containerElement, filmComponent.getElement(), RenderPosition.BEFOREEND);
 };
@@ -90,43 +106,47 @@ const renderSiteComponents = () => {
   const contentComponent = new ContentComponent();
   render(fragment, contentComponent.getElement(), RenderPosition.BEFOREEND);
 
-  const catalogComponent = new CatalogComponent();
-  render(contentComponent.getElement(), catalogComponent.getElement(), RenderPosition.BEFOREEND);
+  if (films.length === 0) {
+    render(contentComponent.getElement(), new EmptyCatalogComponent().getElement(), RenderPosition.BEFOREEND);
+  } else {
+    const catalogComponent = new CatalogComponent();
+    render(contentComponent.getElement(), catalogComponent.getElement(), RenderPosition.BEFOREEND);
 
-  const catalogFilmListContainer = new FilmListContainerComponent();
-  render(catalogComponent.getElement(), catalogFilmListContainer.getElement(), RenderPosition.BEFOREEND);
+    const catalogFilmListContainer = new FilmListContainerComponent();
+    render(catalogComponent.getElement(), catalogFilmListContainer.getElement(), RenderPosition.BEFOREEND);
 
-  let showedFilmsCount = ShowSettings.FILM_COUNT_ON_START;
+    let showedFilmsCount = ShowSettings.FILM_COUNT_ON_START;
 
-  films.slice(0, showedFilmsCount)
-    .forEach((film) => {
-      renderFilm(catalogFilmListContainer.getElement(), film);
-    });
-
-  const showMoreButtonComponent = new ShowMoreButtonComponent();
-  render(catalogComponent.getElement(), showMoreButtonComponent.getElement(), RenderPosition.BEFOREEND);
-
-  const renderMoreFilms = () => {
-    const previouslyShowedFilmsCount = showedFilmsCount;
-    showedFilmsCount = showedFilmsCount + ShowSettings.FILM_COUNT_BY_BUTTON;
-
-    films.slice(previouslyShowedFilmsCount, showedFilmsCount)
+    films.slice(0, showedFilmsCount)
       .forEach((film) => {
         renderFilm(catalogFilmListContainer.getElement(), film);
       });
-  };
 
-  const showMoreButtonClickHandler = () => {
-    renderMoreFilms();
+    const showMoreButtonComponent = new ShowMoreButtonComponent();
+    render(catalogComponent.getElement(), showMoreButtonComponent.getElement(), RenderPosition.BEFOREEND);
 
-    if (showedFilmsCount >= films.length) {
-      showMoreButtonComponent.getElement().removeEventListener(`click`, showMoreButtonClickHandler);
-      showMoreButtonComponent.getElement().remove();
-      showMoreButtonComponent.removeElement();
-    }
-  };
+    const renderMoreFilms = () => {
+      const previouslyShowedFilmsCount = showedFilmsCount;
+      showedFilmsCount = showedFilmsCount + ShowSettings.FILM_COUNT_BY_BUTTON;
 
-  showMoreButtonComponent.getElement().addEventListener(`click`, showMoreButtonClickHandler);
+      films.slice(previouslyShowedFilmsCount, showedFilmsCount)
+        .forEach((film) => {
+          renderFilm(catalogFilmListContainer.getElement(), film);
+        });
+    };
+
+    const showMoreButtonClickHandler = () => {
+      renderMoreFilms();
+
+      if (showedFilmsCount >= films.length) {
+        showMoreButtonComponent.getElement().removeEventListener(`click`, showMoreButtonClickHandler);
+        showMoreButtonComponent.getElement().remove();
+        showMoreButtonComponent.removeElement();
+      }
+    };
+
+    showMoreButtonComponent.getElement().addEventListener(`click`, showMoreButtonClickHandler);
+  }
 
   const selections = getSelections(films);
   selections.forEach((selection) => {
