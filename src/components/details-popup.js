@@ -6,8 +6,7 @@ const setupAlternativeTitleTemplate = (alternativeTitle) => {
 };
 
 const createAlternativeTitleMarkup = ({filmInfo: {alternativeTitle}}) => {
-  const hasAlternativeTitle = !!alternativeTitle;
-  return hasAlternativeTitle ? setupAlternativeTitleTemplate(alternativeTitle) : ``;
+  return alternativeTitle ? setupAlternativeTitleTemplate(alternativeTitle) : ``;
 };
 
 const setupPersonalRatingTemplate = (personalRating) => {
@@ -15,8 +14,7 @@ const setupPersonalRatingTemplate = (personalRating) => {
 };
 
 const createPersonalRatingMarkup = ({userDetails: {personalRating}}) => {
-  const hasPersonalRating = !!personalRating;
-  return hasPersonalRating ? setupPersonalRatingTemplate(personalRating) : ``;
+  return personalRating ? setupPersonalRatingTemplate(personalRating) : ``;
 };
 
 const setupGenreTemplate = (genre) => {
@@ -199,13 +197,24 @@ const createInfoSectionMarkup = (film) => {
 
 
 const setupScorePointsTemplate = (scorePoints, checkedAttribute) => {
-  return `<input type="radio" name="score" class="film-details__user-rating-input visually-hidden" value="${scorePoints}" id="rating-${scorePoints}" ${checkedAttribute}>
-  <label class="film-details__user-rating-label" for="rating-${scorePoints}">${scorePoints}</label>`;
+  return `<input
+    type="radio"
+    name="score"
+    class="film-details__user-rating-input visually-hidden"
+    value="${scorePoints}"
+    id="rating-${scorePoints}"
+    ${checkedAttribute}
+  >
+  <label
+    class="film-details__user-rating-label"
+    for="rating-${scorePoints}"
+  >
+    ${scorePoints}
+  </label>`;
 };
 
 const createScorePointsMarkup = (scorePoints, isChecked) => {
-  const checkedAttribute = isChecked ? `checked` : ``;
-  return setupScorePointsTemplate(scorePoints, checkedAttribute);
+  return setupScorePointsTemplate(scorePoints, isChecked ? `checked` : ``);
 };
 
 const setupRatingScoreTemplate = (scorePointsRangeMarkup) => {
@@ -215,7 +224,7 @@ const setupRatingScoreTemplate = (scorePointsRangeMarkup) => {
 };
 
 const createRatingScoreMarkup = ({userDetails: {personalRating}}) => {
-  const scorePointsRange = createRange(PersonalRating.SCORE_MIN, PersonalRating.SCORE_MAX);
+  const scorePointsRange = createRange(PersonalRating.MIN, PersonalRating.MAX);
   const scorePointsRangeMarkup = scorePointsRange.map((scorePoints) => {
     const isChecked = scorePoints === personalRating;
     return createScorePointsMarkup(scorePoints, isChecked);

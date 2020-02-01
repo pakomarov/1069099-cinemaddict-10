@@ -57,7 +57,8 @@ const formatRuntime = (totalMinutes) => {
   return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
 };
 
-const formatNumberWithDelimeters = (number, delimeter) => number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, delimeter);
+const THREE_DIGITS_REGEXP = /\B(?=(\d{3})+(?!\d))/g;
+const formatNumberWithDelimeters = (number, delimeter) => number.toString().replace(THREE_DIGITS_REGEXP, delimeter);
 
 const getMonthName = (date) => new Intl.DateTimeFormat(`en-US`, {month: `long`}).format(date);
 

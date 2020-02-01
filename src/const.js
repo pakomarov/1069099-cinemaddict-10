@@ -1,6 +1,6 @@
 const PersonalRating = {
-  SCORE_MIN: 1,
-  SCORE_MAX: 9,
+  MIN: 1,
+  MAX: 9,
 };
 
 const PROFILE_RANKS = [

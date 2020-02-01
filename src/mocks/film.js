@@ -123,7 +123,7 @@ const generateGenre = () => getRandomSubsetOfArray(GENRES);
 const generateDescription = () => getRandomSubsetOfArray(MOCKUP_SENTENCES)
   .join(` `);
 
-const generatePersonalRating = () => getRandomBetween(PersonalRating.SCORE_MIN, PersonalRating.SCORE_MAX);
+const generatePersonalRating = () => getRandomBetween(PersonalRating.MIN, PersonalRating.MAX);
 
 const generateWatchlist = () => flipCoin();
 

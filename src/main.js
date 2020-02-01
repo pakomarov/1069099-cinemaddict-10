@@ -17,12 +17,18 @@ import {getCatalogSize} from './mocks/brief-stats.js';
 import BriefStatsComponent from './components/brief-stats.js';
 import DetailsPopupComponent from './components/details-popup.js';
 
+const Selector = {
+  BODY: `body`,
+  HEADER: `.header`,
+  MAIN: `.main`,
+  FOOTER: `.footer`
+};
 const FILM_COUNT = 17;
 
-const bodyElement = document.querySelector(`body`);
-const siteHeaderElement = bodyElement.querySelector(`.header`);
-const siteMainElement = bodyElement.querySelector(`.main`);
-const siteFooterElement = bodyElement.querySelector(`.footer`);
+const bodyElement = document.querySelector(Selector.BODY);
+const siteHeaderElement = bodyElement.querySelector(Selector.HEADER);
+const siteMainElement = bodyElement.querySelector(Selector.MAIN);
+const siteFooterElement = bodyElement.querySelector(Selector.FOOTER);
 
 const films = generateFilms(FILM_COUNT);
 
@@ -42,19 +48,11 @@ const renderFilm = (containerElement, film) => {
     detailsPopupComponent.getElement().remove();
   };
 
-  posterElement.addEventListener(`click`, () => {
-    openDetailsPopup();
-  });
-  titleElement.addEventListener(`click`, () => {
-    openDetailsPopup();
-  });
-  commentsElement.addEventListener(`click`, () => {
-    openDetailsPopup();
-  });
+  posterElement.addEventListener(`click`, openDetailsPopup);
+  titleElement.addEventListener(`click`, openDetailsPopup);
+  commentsElement.addEventListener(`click`, openDetailsPopup);
 
-  closeButtonElement.addEventListener(`click`, () => {
-    closeDetailsPopup();
-  });
+  closeButtonElement.addEventListener(`click`, closeDetailsPopup);
 
   render(containerElement, filmComponent.getElement(), RenderPosition.BEFOREEND);
 };
