@@ -1,14 +1,30 @@
-import {formatCatalogSize} from '../utils.js';
+import {createElement} from '../utils.js';
 
-const setupBriefStatsTemplate = (catalogSize) => {
+const createBriefStatsTemplate = (catalogSize) => {
   return `<section class="footer__statistics">
     <p>${catalogSize} movies inside</p>
   </section>`;
 };
 
-const createBriefStatsMarkup = (catalog) => {
-  const catalogSize = formatCatalogSize(catalog.length);
-  return setupBriefStatsTemplate(catalogSize);
-};
+export default class BriefStats {
+  constructor(catalogSize) {
+    this._catalogSize = catalogSize;
+    this._element = null;
+  }
 
-export {createBriefStatsMarkup};
+  getTemplate() {
+    return createBriefStatsTemplate(this._catalogSize);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

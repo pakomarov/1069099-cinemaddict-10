@@ -1,5 +1,24 @@
-const render = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
+const RenderPosition = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`
+};
+
+const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+
+  return newElement.firstChild;
+};
+
+const render = (container, element, place) => {
+  switch (place) {
+    case RenderPosition.AFTERBEGIN:
+      container.prepend(element);
+      break;
+    case RenderPosition.BEFOREEND:
+      container.append(element);
+      break;
+  }
 };
 
 // Добавление единицы необходимо, чтобы включить максимальное значение. Math.random() считает от 0 включительно до 1, не включая единицу
@@ -38,9 +57,7 @@ const formatRuntime = (totalMinutes) => {
   return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
 };
 
-const numberWithDelimeters = (number, delimeter) => number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, delimeter);
-
-const formatCatalogSize = (catalogSize) => numberWithDelimeters(catalogSize, ` `);
+const formatNumberWithDelimeters = (number, delimeter) => number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, delimeter);
 
 const getMonthName = (date) => new Intl.DateTimeFormat(`en-US`, {month: `long`}).format(date);
 
@@ -75,6 +92,8 @@ const formatCommentDate = (date) => {
 };
 
 export {
+  RenderPosition,
+  createElement,
   render,
   getRandomBetween,
   getRandomArrayEntry,
@@ -83,8 +102,8 @@ export {
   flipCoin,
   joinMapped,
   formatRuntime,
-  formatCatalogSize,
   formatReleaseDate,
+  formatNumberWithDelimeters,
   createRange,
   formatCommentDate
 };

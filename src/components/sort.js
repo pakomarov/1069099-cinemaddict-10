@@ -1,3 +1,4 @@
+import {createElement} from '../utils.js';
 import {SortSettings} from '../const.js';
 
 const createSortButtonMarkup = (activeClass, title) => {
@@ -10,7 +11,7 @@ const setupSortTemplate = (sortButtonsMarkup) => {
   </ul>`;
 };
 
-const createSortMarkup = () => {
+const createSortTemplate = () => {
   const sortButtonsMarkup = SortSettings.BUTTONS_TITLES.map((title, i) => {
     const activeClass = i === 0 ? SortSettings.CLASS_ACTIVE : ``;
     return createSortButtonMarkup(activeClass, title);
@@ -19,4 +20,24 @@ const createSortMarkup = () => {
   return setupSortTemplate(sortButtonsMarkup);
 };
 
-export {createSortMarkup};
+export default class Sort {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createSortTemplate();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

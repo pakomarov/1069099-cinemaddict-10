@@ -1,3 +1,8 @@
+const PersonalRating = {
+  SCORE_MIN: 1,
+  SCORE_MAX: 9,
+};
+
 const PROFILE_RANKS = [
   {borderCount: 0, title: ``},
   {borderCount: 10, title: `Novice`},
@@ -7,7 +12,6 @@ const PROFILE_RANKS = [
 
 const SiteMenuSettings = {
   FILTER_TITLES: [
-    `All movies`,
     `Watchlist`,
     `History`,
     `Favorites`
@@ -43,11 +47,6 @@ const CONTROLS = [
   {title: `favorite`, text: `Add to favorite`}
 ];
 
-const RatingScoreSettings = {
-  SCORE_MIN: 1,
-  SCORE_MAX: 9
-};
-
 const EMOTIONS = [
   `smile`,
   `sleeping`,
@@ -61,13 +60,13 @@ const ShowSettings = {
 };
 
 export {
+  PersonalRating,
   PROFILE_RANKS,
   SiteMenuSettings,
   SortSettings,
   FilmSettings,
   SelectionSettings,
   CONTROLS,
-  RatingScoreSettings,
   EMOTIONS,
   ShowSettings
 };

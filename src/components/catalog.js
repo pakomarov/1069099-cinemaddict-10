@@ -1,17 +1,18 @@
 import {createElement} from '../utils.js';
 
-const createContentTemplate = () => {
-  return `<section class="films">
-  </section>`;
+const createCatalogTemplate = () => {
+  return `<section class="films-list">
+      <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
+    </section>`;
 };
 
-export default class Content {
+export default class Catalog {
   constructor() {
     this._element = null;
   }
 
   getTemplate() {
-    return createContentTemplate();
+    return createCatalogTemplate();
   }
 
   getElement() {

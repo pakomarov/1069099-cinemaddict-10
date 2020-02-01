@@ -1,7 +1,5 @@
 import {SelectionSettings} from '../const.js';
 
-const isCatalogEmpty = (catalog) => catalog.length === 0;
-
 const getCatalogSortedByRating = (catalog) => catalog.slice()
   .sort((a, b) => b.filmInfo.totalRating - a.filmInfo.totalRating);
 
@@ -14,8 +12,8 @@ const hasMostCommentedFilmComments = (mostCommentedFilm) => mostCommentedFilm.co
 
 const pickEnough = (sortedCatalog) => sortedCatalog.slice(0, SelectionSettings.COUNT);
 
-const selectFilms = (selectionTitle, catalog) => {
-  if (isCatalogEmpty(catalog)) {
+const selectFilms = (selectionTitle, films) => {
+  if (films.length === 0) {
     return null;
   }
 
@@ -33,7 +31,7 @@ const selectFilms = (selectionTitle, catalog) => {
       break;
   }
 
-  const sortedCatalog = sortingMethod(catalog);
+  const sortedCatalog = sortingMethod(films);
 
   // Здесь при любой выборке проверяем первый (топовый) элемент. Если топовый элемент не обладает свойством (рэйтинг или комменты), то и другие тоже
   if (!selectionValidationMethod(sortedCatalog[0])) {
@@ -43,11 +41,11 @@ const selectFilms = (selectionTitle, catalog) => {
   return pickEnough(sortedCatalog);
 };
 
-const getSelections = (catalog) => {
+const getSelections = (films) => {
   return SelectionSettings.SELECTION_TITLES.map((selectionTitle) => {
     return {
       title: selectionTitle,
-      selectedFilms: selectFilms(selectionTitle, catalog)
+      films: selectFilms(selectionTitle, films)
     };
   });
 };
