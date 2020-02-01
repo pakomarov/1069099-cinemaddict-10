@@ -8,7 +8,7 @@ const titleToPropertyName = {
 
 const getFilterCount = (filterTitle, films) => {
   return films.reduce((count, film) => {
-    return count + film.userDetails[titleToPropertyName[filterTitle]] ? 1 : 0;
+    return count + (film.userDetails[titleToPropertyName[filterTitle]] ? 1 : 0);
   }, 0);
 };
 

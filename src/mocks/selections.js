@@ -45,7 +45,7 @@ const getSelections = (films) => {
   return SelectionSettings.SELECTION_TITLES.map((selectionTitle) => {
     return {
       title: selectionTitle,
-      selectedFilms: selectFilms(selectionTitle, films)
+      films: selectFilms(selectionTitle, films)
     };
   });
 };

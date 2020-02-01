@@ -1,17 +1,15 @@
-import {createElement} from '../utils.js';
-import {SiteMenuSettings} from '../const.js';
+import {createElement, joinMapped} from '../utils.js';
 
-const setupFilterTemplate = (link, activeClass, title, count) => {
-  return `<a href="${link}" class="main-navigation__item ${activeClass}">
+const setupFilterTemplate = (link, title, count) => {
+  return `<a href="${link}" class="main-navigation__item">
     ${title}
     <span class="main-navigation__item-count">${count}</span>
   </a>`;
 };
 
-const createFilterMarkup = ({title, count}, isActive) => {
+const createFilterMarkup = ({title, count}) => {
   const link = `#${title.toLowerCase()}`;
-  const activeClass = isActive ? SiteMenuSettings.CLASS_ACTIVE : ``;
-  return setupFilterTemplate(link, activeClass, title, count);
+  return setupFilterTemplate(link, title, count);
 };
 
 const setupSiteMenuTemplate = (filtersMarkup) => {
@@ -23,11 +21,7 @@ const setupSiteMenuTemplate = (filtersMarkup) => {
 };
 
 const createSiteMenuTemplate = (filters) => {
-  const filtersMarkup = filters.map((filter, i) => {
-    const isActive = i === 0;
-    return createFilterMarkup(filter, isActive);
-  })
-  .join(`\n`);
+  const filtersMarkup = joinMapped(filters, createFilterMarkup, `\n`);
   return setupSiteMenuTemplate(filtersMarkup);
 };
 

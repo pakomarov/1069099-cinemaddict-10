@@ -2,7 +2,7 @@ import {PROFILE_RANKS} from '../const.js';
 
 const countWacthedFilms = (films) => {
   return films.reduce((watchedCount, film) => {
-    return watchedCount + film.userDetails.alreadyWatched ? 1 : 0;
+    return watchedCount + (film.userDetails.alreadyWatched ? 1 : 0);
   }, 0);
 };
 

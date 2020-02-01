@@ -1,5 +1,5 @@
 import {formatNumberWithDelimeters} from '../utils.js';
 
-const getCatalogSize = (catalog) => formatNumberWithDelimeters(catalog.length, ` `);
+const getCatalogSize = (films) => formatNumberWithDelimeters(films.length, ` `);
 
 export {getCatalogSize};

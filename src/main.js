@@ -1,95 +1,130 @@
-import {render, joinMapped} from './utils.js';
-import {generateCatalog} from './mocks/catalog.js';
+import {RenderPosition, render} from './utils.js';
+import {generateFilms} from './mocks/film.js';
 import {getProfileRank} from './mocks/profile.js';
-import {createProfileMarkup} from './components/profile.js';
-import {getFilters} from './mocks/site-menu.js';
-import {createSiteMenuMarkup} from './components/site-menu.js';
-import {createSortMarkup} from './components/sort.js';
-import {createContentMarkup} from './components/content.js';
+import Profile from './components/profile.js';
+import {getFilters} from './mocks/filters.js';
+import SiteMenu from './components/site-menu.js';
+import Sort from './components/sort.js';
+import Content from './components/content.js';
+import Catalog from './components/catalog.js';
+import FilmListContainer from './components/film-list-container.js';
 import {ShowSettings} from './const.js';
-import {createFilmMarkup} from './components/film.js';
-import {createShowMoreButtonMarkup} from './components/show-more-button.js';
+import ShowMoreButton from './components/show-more-button';
+import Film from './components/film.js';
 import {getSelections} from './mocks/selections.js';
-import {createSelectionMarkup} from './components/selection.js';
-import {createBriefStatsMarkup} from './components/brief-stats.js';
-import {createFilmDetailsMarkup} from './components/film-details.js';
-import {createInfoSectionMarkup} from './components/info-section.js';
-import {getControls} from './mocks/controls.js';
-import {createControlsMarkup} from './components/control-section.js';
-import {createRatingSectionMarkup} from './components/rating-section.js';
-import {createCommentSectionMarkup} from './components/comment-section.js';
+import Selection from './components/selection.js';
+import {getCatalogSize} from './mocks/brief-stats.js';
+import BriefStats from './components/brief-stats.js';
+import DetailsPopup from './components/details-popup.js';
+import DetailsForm from './components/details-form.js';
+import InfoSection from './components/info-section.js';
+import RatingSection from './components/rating-section.js';
+import CommentSection from './components/comment-section.js';
 
 const FILM_COUNT = 17;
 const OPENED_FILM_INDEX = 0;
 
-const siteHeaderElement = document.querySelector(`.header`);
-const siteMainElement = document.querySelector(`.main`);
-const siteFooterElement = document.querySelector(`.footer`);
+const bodyElement = document.querySelector(`body`);
+const siteHeaderElement = bodyElement.querySelector(`.header`);
+const siteMainElement = bodyElement.querySelector(`.main`);
+const siteFooterElement = bodyElement.querySelector(`.footer`);
 
-const catalog = generateCatalog(FILM_COUNT);
+const films = generateFilms(FILM_COUNT);
+
 
 const renderFilmDetails = (container, film, place) => {
-  render(container, createFilmDetailsMarkup(film), place);
-  const filmDetailsElement = document.querySelector(`.film-details__inner`);
-  render(filmDetailsElement, createInfoSectionMarkup(film), `beforeend`);
-  const infoSectionContainerElement = filmDetailsElement.querySelector(`.form-details__top-container`);
-  const controls = getControls(film);
-  render(infoSectionContainerElement, createControlsMarkup(controls), `beforeend`);
+  const detailsPopupComponent = new DetailsPopup();
+  const detailsFormComponent = new DetailsForm();
+  render(detailsPopupComponent.getElement(), detailsFormComponent.getElement(), RenderPosition.BEFOREEND);
+
+  render(detailsFormComponent.getElement(), new InfoSection(film).getElement(), RenderPosition.BEFOREEND);
   if (film.userDetails.alreadyWatched) {
-    render(filmDetailsElement, createRatingSectionMarkup(film), `beforeend`);
+    render(detailsFormComponent.getElement(), new RatingSection(film).getElement(), RenderPosition.BEFOREEND);
   }
-  render(filmDetailsElement, createCommentSectionMarkup(film), `beforeend`);
+  render(detailsFormComponent.getElement(), new CommentSection(film).getElement(), RenderPosition.BEFOREEND);
+
+  render(container, detailsPopupComponent.getElement(), place);
+};
+
+const renderSelection = (container, selection, place) => {
+  const {title, films: selectedFilms} = selection;
+  if (!selectedFilms) {
+    return;
+  }
+
+  const selectionComponent = new Selection(title);
+  render(container, selectionComponent.getElement(), place);
+  const filmListContainer = new FilmListContainer();
+  render(selectionComponent.getElement(), filmListContainer.getElement(), RenderPosition.BEFOREEND);
+  selectedFilms.forEach((film) => {
+    render(filmListContainer.getElement(), new Film(film).getElement(), RenderPosition.BEFOREEND);
+  });
 };
 
 const renderSiteComponents = () => {
-  const profileRank = getProfileRank(catalog);
-  render(siteHeaderElement, createProfileMarkup(profileRank), `beforeend`);
+  const profileRank = getProfileRank(films);
+  render(siteHeaderElement, new Profile(profileRank).getElement(), RenderPosition.BEFOREEND);
 
-  const filters = getFilters(catalog);
-  render(siteMainElement, createSiteMenuMarkup(filters), `beforeend`);
+  const fragment = document.createDocumentFragment();
 
-  render(siteMainElement, createSortMarkup(), `beforeend`);
+  const filters = getFilters(films);
+  render(fragment, new SiteMenu(filters).getElement(), RenderPosition.BEFOREEND);
 
-  render(siteMainElement, createContentMarkup(), `beforeend`);
+  render(fragment, new Sort().getElement(), RenderPosition.BEFOREEND);
 
-  const contentElement = siteMainElement.querySelector(`.films`);
-  const filmsContainerElement = contentElement.querySelector(`.films-list__container`);
+  const contentComponent = new Content();
+  render(fragment, contentComponent.getElement(), RenderPosition.BEFOREEND);
+
+  const catalogComponent = new Catalog();
+  render(contentComponent.getElement(), catalogComponent.getElement(), RenderPosition.BEFOREEND);
+
+  const catalogFilmListContainer = new FilmListContainer();
+  render(catalogComponent.getElement(), catalogFilmListContainer.getElement(), RenderPosition.BEFOREEND);
 
   let showedFilmsCount = ShowSettings.FILM_COUNT_ON_START;
-  catalog.slice(0, showedFilmsCount)
+
+  films.slice(0, showedFilmsCount)
     .forEach((film) => {
-      render(filmsContainerElement, createFilmMarkup(film), `beforeend`);
+      render(catalogFilmListContainer.getElement(), new Film(film).getElement(), RenderPosition.BEFOREEND);
     });
 
-  render(filmsContainerElement, createShowMoreButtonMarkup(), `afterend`);
+  const showMoreButtonComponent = new ShowMoreButton();
+  render(catalogComponent.getElement(), showMoreButtonComponent.getElement(), RenderPosition.BEFOREEND);
 
-  const showMoreButton = contentElement.querySelector(`.films-list__show-more`);
   const renderMoreFilms = () => {
     const previouslyShowedFilmsCount = showedFilmsCount;
     showedFilmsCount = showedFilmsCount + ShowSettings.FILM_COUNT_BY_BUTTON;
 
-    const additionalFilms = catalog.slice(previouslyShowedFilmsCount, showedFilmsCount);
-    const additionalFilmsMarkup = joinMapped(additionalFilms, createFilmMarkup, `\n`);
-    render(filmsContainerElement, additionalFilmsMarkup, `beforeend`);
+    films.slice(previouslyShowedFilmsCount, showedFilmsCount)
+      .forEach((film) => {
+        render(catalogFilmListContainer.getElement(), new Film(film).getElement(), RenderPosition.BEFOREEND);
+      });
   };
+
   const showMoreButtonClickHandler = () => {
     renderMoreFilms();
-    if (showedFilmsCount >= catalog.length) {
-      showMoreButton.removeEventListener(`click`, showMoreButtonClickHandler);
-      showMoreButton.remove();
+
+    if (showedFilmsCount >= films.length) {
+      showMoreButtonComponent.getElement().removeEventListener(`click`, showMoreButtonClickHandler);
+      showMoreButtonComponent.getElement().remove();
+      showMoreButtonComponent.removeElement();
     }
   };
-  showMoreButton.addEventListener(`click`, showMoreButtonClickHandler);
 
-  const selections = getSelections(catalog);
+  showMoreButtonComponent.getElement().addEventListener(`click`, showMoreButtonClickHandler);
+
+  const selections = getSelections(films);
   selections.forEach((selection) => {
-    render(contentElement, createSelectionMarkup(selection), `beforeend`);
+    renderSelection(contentComponent.getElement(), selection, RenderPosition.BEFOREEND);
   });
 
-  render(siteFooterElement, createBriefStatsMarkup(catalog), `beforeend`);
+  render(siteMainElement, fragment, RenderPosition.BEFOREEND);
 
-  const openedFilm = catalog[OPENED_FILM_INDEX];
-  renderFilmDetails(siteFooterElement, openedFilm, `afterend`);
+  const catalogSize = getCatalogSize(films);
+  render(siteFooterElement, new BriefStats(catalogSize).getElement(), RenderPosition.BEFOREEND);
+
+  const openedFilm = films[OPENED_FILM_INDEX];
+  renderFilmDetails(bodyElement, openedFilm, RenderPosition.BEFOREEND);
 };
 
 renderSiteComponents();

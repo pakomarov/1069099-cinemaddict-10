@@ -74,7 +74,8 @@ const setupCommentSectionTemplate = (commentCount, commentsMarkup, newCommentMar
   </div>`;
 };
 
-const createCommentSectionTemplate = ({comments}) => {
+const createCommentSectionTemplate = (film) => {
+  const {comments} = film;
   const commentCount = comments.length;
   const commentsMarkup = createCommentsMarkup(comments);
   const newCommentMarkup = createNewCommentMarkup();

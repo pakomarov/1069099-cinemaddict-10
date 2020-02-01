@@ -14,7 +14,7 @@ export default class Profile {
   }
 
   getTemplate() {
-    return createProfileTemplate(this.rank);
+    return createProfileTemplate(this._rank);
   }
 
   getElement() {
